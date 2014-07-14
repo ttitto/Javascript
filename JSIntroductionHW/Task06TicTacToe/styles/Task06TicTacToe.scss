@@ -1,26 +1,37 @@
-$height:500px;
-html, body, hgroup, h1, p,section, div, span{
-  margin:0;
+$height: 500px;
+html, body, hgroup, h1, p, section, div, span {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 header {
   text-align: center;
-  margin-bottom: 15px;
+  padding-bottom: 15px;
+  background: #7080FF;
+  width: 500px;
+  margin: 0 auto;
+  h1 {
+    color: red;
+  }
+  p {
+    color: #806080;
+    font-size: 1.2em;
+  }
 }
-#game{
+
+#game {
   height: $height;
   width: $height;
-  margin:0 auto;
+  margin: 0 auto;
   background: gray;
   overflow: hidden;
   text-align: center;
-  div.cell{
+  div.cell {
     width: 32%;
     height: 32%;
     background: blue;
-    border:red solid 1px;
+    border: red solid 1px;
     display: inline-block;
 
   }
@@ -33,7 +44,7 @@ header {
     content: "";
     position: absolute;
     z-index: -1;
-    background: #000;
+    background: gray;
   }
 
   div.cell.cross:before {
@@ -42,8 +53,8 @@ header {
     margin-left: -10%;
     height: 100%;
     z-index: 10;
-    -webkit-transform:rotate(45deg);
-    transform:rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 
   div.cell.cross:after {
@@ -53,9 +64,40 @@ header {
     margin-left: -50%;
     width: 100%;
     z-index: 10;
-    -webkit-transform:rotate(45deg);
-    transform:rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
-/*CIRCLE SIGN*/
+  /*CIRCLE SIGN*/
+  div.cell.circle {
+    position: relative;
+  }
+  div.cell.circle:after, div.cell.circle:before {
+    content: '';
+    position: absolute;
 
+  }
+  div.cell.circle:after {
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border-radius: 60px;
+    background: red;
+  }
+  div.cell.circle:before {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    border-radius: 60px;
+    z-index: 10;
+    background: blue;
+  }
+}
+
+.game-over-message {
+  text-align: center;
+  font-size: 80px;
+  color: orangered;
+  display: none;
 }

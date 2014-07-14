@@ -5,7 +5,15 @@ html, body, hgroup, h1, p, section, div, span {
 
 header {
   text-align: center;
-  margin-bottom: 15px; }
+  padding-bottom: 15px;
+  background: #7080FF;
+  width: 500px;
+  margin: 0 auto; }
+  header h1 {
+    color: red; }
+  header p {
+    color: #806080;
+    font-size: 1.2em; }
 
 #game {
   height: 500px;
@@ -28,7 +36,7 @@ header {
     content: "";
     position: absolute;
     z-index: -1;
-    background: #000; }
+    background: gray; }
   #game div.cell.cross:before {
     left: 50%;
     width: 20%;
@@ -46,3 +54,29 @@ header {
     z-index: 10;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg); }
+  #game div.cell.circle {
+    position: relative; }
+  #game div.cell.circle:after, #game div.cell.circle:before {
+    content: '';
+    position: absolute; }
+  #game div.cell.circle:after {
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border-radius: 60px;
+    background: red; }
+  #game div.cell.circle:before {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    border-radius: 60px;
+    z-index: 10;
+    background: blue; }
+
+.game-over-message {
+  text-align: center;
+  font-size: 80px;
+  color: orangered;
+  display: none; }
