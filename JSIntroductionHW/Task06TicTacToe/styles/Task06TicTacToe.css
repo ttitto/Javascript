@@ -1,0 +1,48 @@
+html, body, hgroup, h1, p, section, div, span {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+header {
+  text-align: center;
+  margin-bottom: 15px; }
+
+#game {
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  background: gray;
+  overflow: hidden;
+  text-align: center;
+  /*CROSS SIGN*/
+  /*CIRCLE SIGN*/ }
+  #game div.cell {
+    width: 32%;
+    height: 32%;
+    background: blue;
+    border: red solid 1px;
+    display: inline-block; }
+  #game div.cell.cross {
+    position: relative; }
+  #game div.cell.cross:before, #game div.cell.cross:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #000; }
+  #game div.cell.cross:before {
+    left: 50%;
+    width: 20%;
+    margin-left: -10%;
+    height: 100%;
+    z-index: 10;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg); }
+  #game div.cell.cross:after {
+    top: 50%;
+    height: 20%;
+    margin-top: -10%;
+    margin-left: -50%;
+    width: 100%;
+    z-index: 10;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg); }
