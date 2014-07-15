@@ -1,0 +1,37 @@
+html, body, header, section, div, span, h1, p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  text-align: center; }
+
+header {
+  max-width: 1200px;
+  width: 100%;
+  background: #0061FF;
+  margin: 0 auto; }
+
+#game {
+  background: #0094FF;
+  background-image: url("../images/HawaiiBG.png");
+  background-size: cover;
+  max-width: 1200px;
+  width: 100%;
+  height: 650px;
+  margin: 0 auto;
+  position: relative; }
+
+#game-field img {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  overflow: hidden; }
+#game-field .sun {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: yellow; }
