@@ -1,0 +1,25 @@
+#calculator{
+    width: 400px;
+    height: 300px;
+    margin:0 auto;
+    padding:0;
+}
+input[type="text"], p{
+    width:100%;
+    padding: 0 10px;
+    margin:0 auto;
+    height: 20px;
+    background: darkblue;
+    color:orange;
+    display: block;
+}
+input[type="button"]{
+    margin:15px auto;
+    height: 25px;
+    padding: 0 20px;
+    display: block;
+    background: #FFF;
+}
+input[type="button"]:hover{
+    background: orange;
+}
