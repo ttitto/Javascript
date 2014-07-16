@@ -1,14 +1,17 @@
 document.getElementById("eval").onclick = assignResult;
+//implements a contains method for Array instances
 Array.prototype.contains = function (v) {
     return this.indexOf(v) > -1;
 }
+//evaluates the value of the cleared from unallowed signs expression
 function calcExpression() {
-
     return eval(clearExpression());
 }
+//removes all unallowed signs from the input so it could be evaluated with eval()
 function clearExpression() {
     var input = document.getElementById("input").value;
-//    //solution with regular expressions -- doesn't handle the situation where two signs follow one after the other
+//    //solution with regular expressions -- doesn't handle the situation 
+//    //where two signs follow one after the other
 //   var rgx=/[0-9+-/*]*[0-9+-/*]*/g;
 //      var match=input.match(rgx);
 //    var result=match.join('');
@@ -42,11 +45,11 @@ function clearExpression() {
             break;
         }
     }
-
-    alert(result);
+	//end of automat solution
+    //alert(result);
     return result;
 }
-
+//assigns the result from the evaluated expression to the paragraph element
 function assignResult() {
     document.getElementById("result").innerHTML = calcExpression();
 }
