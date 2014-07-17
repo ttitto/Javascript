@@ -1,9 +1,10 @@
+alert('loaded');
 function displayProperties(value) {
-    var props=new Array();
+    var props = [];
     for (var prop in value) {
         props.push(prop);
     }
-
+    props.sort();
     return props.join('\n');
 }
-displayProperties(DOMImplementation.implementation.createDocument('','',null));
+console.log(displayProperties(document));
