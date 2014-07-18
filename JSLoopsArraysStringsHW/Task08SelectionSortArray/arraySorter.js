@@ -17,7 +17,7 @@ function getSmallest(arr) {
     var len = arr.length;
     var result = [arr[0], 0];
     for (var i = 1; i < len; i++) {
-        if (arr[i] < arr[i - 1]) {
+        if (arr[i] < result[0]) {
             result[0] = arr[i];
             result[1] = i;
         }
@@ -25,5 +25,5 @@ function getSmallest(arr) {
     return result;
 }
 
-console.log(sortArray([12, 12, 50, 6, 2, 22, 51, 712, 6, 3, 3]));
-console.log(sortArray([5, 4, 3, 1, 2, 12]));
+console.log(sortArray([ 12, 12, 50, 6, 2, 22, 51, 712, 6, 3, 3 ]));
+console.log(sortArray([ 5, 4, 3, 1, 2, 12 ]));
