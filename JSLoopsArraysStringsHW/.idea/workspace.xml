@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="fa3de9a8-7855-4d3c-af2f-31a681b0984d" name="Default" comment="tasks 13 - 16 solved">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task13ReplaceWhiteSpaces" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task14Palindromes" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task15MostFrequentWord" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task16CardFrequencies" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task16CardFrequencies/cardFrequencies.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task15MostFrequentWord/frequentWord.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task14Palindromes/palindromesExtract.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task13ReplaceWhiteSpaces/spaceReplacer.js" />
+    <list default="true" readonly="true" id="fa3de9a8-7855-4d3c-af2f-31a681b0984d" name="Default" comment="task 17 solved">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task17ExtractElementContent" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task17ExtractElementContent/scripts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task17ExtractElementContent/Task17ExtractElementContent.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Task17ExtractElementContent/scripts/contentExtracter.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JSLoopsArraysStringsHW.iws" />
@@ -60,6 +56,8 @@
         <option value="$PROJECT_DIR$/Task16CardFrequencies/cardFrequencies.js" />
         <option value="$PROJECT_DIR$/Task13ReplaceWhiteSpaces/spaceReplacer.js" />
         <option value="$PROJECT_DIR$/Task15MostFrequentWord/frequentWord.js" />
+        <option value="$PROJECT_DIR$/Task17ExtractElementContent/Task17ExtractElementContent.html" />
+        <option value="$PROJECT_DIR$/Task17ExtractElementContent/scripts/contentExtracter.js" />
       </list>
     </option>
   </component>
@@ -129,18 +127,8 @@
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="restartRequiresConfirmation" value="true" />
   </component>
-  <component name="RunManager" selected="Node.js.frequentWord.js">
-    <configuration default="false" name="substringSearch.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="substringSearch.js" working-dir="$PROJECT_DIR$/Task12SubstringCount">
-      <RunnerSettings RunnerId="NodeJS.debug" />
-      <ConfigurationWrapper RunnerId="NodeJS.debug" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JavaScript Debug.Task17ExtractElementContent.html">
     <configuration default="false" name="spaceReplacer.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="spaceReplacer.js" working-dir="$PROJECT_DIR$/Task13ReplaceWhiteSpaces">
-      <RunnerSettings RunnerId="NodeJS.debug" />
-      <ConfigurationWrapper RunnerId="NodeJS.debug" />
-      <method />
-    </configuration>
-    <configuration default="false" name="palindromesExtract.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="palindromesExtract.js" working-dir="$PROJECT_DIR$/Task14Palindromes">
       <RunnerSettings RunnerId="NodeJS.debug" />
       <ConfigurationWrapper RunnerId="NodeJS.debug" />
       <method />
@@ -155,6 +143,16 @@
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.debug" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="contentExtracter.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="contentExtracter.js" working-dir="$PROJECT_DIR$/Task17ExtractElementContent/scripts">
+      <RunnerSettings RunnerId="NodeJS.debug" />
+      <ConfigurationWrapper RunnerId="NodeJS.debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Task17ExtractElementContent.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" uri="http://localhost:63342/JSLoopsArraysStringsHW/Task17ExtractElementContent/Task17ExtractElementContent.html">
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
       <method />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -199,19 +197,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Node.js.substringSearch.js" />
-      <item index="1" class="java.lang.String" itemvalue="Node.js.spaceReplacer.js" />
-      <item index="2" class="java.lang.String" itemvalue="Node.js.palindromesExtract.js" />
-      <item index="3" class="java.lang.String" itemvalue="Node.js.frequentWord.js" />
-      <item index="4" class="java.lang.String" itemvalue="Node.js.cardFrequencies.js" />
+      <item index="0" class="java.lang.String" itemvalue="Node.js.spaceReplacer.js" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.frequentWord.js" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.cardFrequencies.js" />
+      <item index="3" class="java.lang.String" itemvalue="Node.js.contentExtracter.js" />
+      <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.Task17ExtractElementContent.html" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Node.js.frequentWord.js" />
-        <item index="1" class="java.lang.String" itemvalue="Node.js.spaceReplacer.js" />
-        <item index="2" class="java.lang.String" itemvalue="Node.js.cardFrequencies.js" />
-        <item index="3" class="java.lang.String" itemvalue="Node.js.palindromesExtract.js" />
-        <item index="4" class="java.lang.String" itemvalue="Node.js.substringSearch.js" />
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.Task17ExtractElementContent.html" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.contentExtracter.js" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.frequentWord.js" />
+        <item index="3" class="java.lang.String" itemvalue="Node.js.spaceReplacer.js" />
+        <item index="4" class="java.lang.String" itemvalue="Node.js.cardFrequencies.js" />
       </list>
     </recent_temporary>
   </component>
@@ -252,17 +250,41 @@
       <created>1405715122708</created>
       <updated>1405715122708</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="tasks 13 - 16 solved">
+      <created>1405768366258</created>
+      <updated>1405768366258</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32744783" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905295" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905295" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20386904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3691814" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -297,11 +319,12 @@
     <MESSAGE value="tasks 9-11 solved" />
     <MESSAGE value="task 12 solved" />
     <MESSAGE value="tasks 13 - 16 solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="tasks 13 - 16 solved" />
+    <MESSAGE value="task 17 solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="task 17 solved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="31" />
+      <option name="time" value="33" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -410,6 +433,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1643835" vertical-offset="187" max-vertical-offset="782">
           <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task17ExtractElementContent/Task17ExtractElementContent.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40117994" vertical-offset="0" max-vertical-offset="339">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task17ExtractElementContent/scripts/contentExtracter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41917807" vertical-offset="0" max-vertical-offset="365">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
           <folding />
         </state>
       </provider>
