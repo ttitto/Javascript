@@ -6,12 +6,12 @@ html, body, header, section, div, span, h1, p {
 body {
   width: 100%;
   height: 100%;
-  font-size: 30px;
+  font-size: 15px;
+  background: #0061FF;
   text-align: center; }
 
 header {
-  max-width: 1200px;
-  width: 100%;
+  width: 960px;
   background: #0061FF;
   margin: 0 auto; }
 
@@ -19,19 +19,46 @@ header {
   background: #0094FF;
   background-image: url("../images/HawaiiBG.png");
   background-size: cover;
-  max-width: 1200px;
-  width: 100%;
-  height: 650px;
+  width: 960px;
+  height: 600px;
   margin: 0 auto;
   position: relative; }
 
-#game-field img {
+#game-field .player {
   width: 50px;
   height: 100px;
   position: absolute;
   overflow: hidden; }
-#game-field .sun {
-  width: 20px;
+#game-field img#nakov {
+  bottom: 200px;
+  left: 130px; }
+#game-field img#tedi {
+  bottom: 150px;
+  left: 630px; }
+#game-field img#alex {
+  bottom: 100px;
+  left: 480px; }
+#game-field img#petya {
+  bottom: 50px;
+  left: 900px; }
+#game-field img#vladog {
+  bottom: 150px;
+  left: 250px; }
+#game-field img#vladok {
+  bottom: 250px;
+  left: 550px; }
+#game-field div.monkey {
+  width: 100px;
+  height: 130px;
+  background-image: url("../images/monkey1.png"), url("../images/shit.png");
+  background-size: 100px 130px, 0px 20px;
+  background-repeat: no-repeat, no-repeat;
+  position: absolute;
+  left: 45px; }
+#game-field .shit {
+  width: 30px;
   height: 20px;
   border-radius: 20px;
-  background: yellow; }
+  background-image: url("../images/shit.png");
+  background-size: cover;
+  position: absolute; }
