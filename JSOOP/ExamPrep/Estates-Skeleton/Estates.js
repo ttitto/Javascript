@@ -230,10 +230,10 @@
             this._floors = Helpers.validateRange(floors, 1, 10, "House floors should be in the range [1 - 10]");
         };
 
-        House.prototype.toString.call(this)
-        {
+        House.prototype.toString = function () {
             var houseStr = Estate.prototype.toString.call(this);
-
+            houseStr += ", Floors: " + this.getFloors();
+            return houseStr;
         }
 
         return House;
@@ -274,6 +274,13 @@
             this._height = Helpers.validateRange(height, 1, 500, "Garage's height should be in the range [1 - 500]");
         }
 
+        Garage.prototype.toString = function () {
+            var garageStr = Estate.prototype.toString.call(this);
+            garageStr += ", Width: {0}, Height: {1}".format(this.getWidth(), this.getHeight());
+
+            return garageStr;
+        }
+
         return Garage;
     }());
 
@@ -295,6 +302,9 @@
         }
 
         Offer.prototype.setEstate = function (estate) {
+            if (!(estate instanceof Estate)) {
+                throw new Error("Estate should be instance of Estate.");
+            }
             this._estate = estate;
         }
 
@@ -303,7 +313,26 @@
         }
 
         Offer.prototype.setPrice = function (price) {
+            if (price <= 0) {
+                throw new Error("Price can not be negative or zero.");
+            }
+
+            if (!Helpers.isInteger(price)) {
+                throw  new Error("Price should be integer number.");
+            }
+
             this._price = price;
+        }
+
+        Offer.prototype.toString = function () {
+            var offerStr = "{0}: Estate = {1}, Location = {2}, Price = {3}".format(
+                this._type,
+                this.getEstate().getName(),
+                this.getEstate().getLocation(),
+                this.getPrice()
+            );
+
+            return offerStr;
         }
 
         return Offer;
@@ -318,13 +347,17 @@
         RentOffer.prototype = Object.create(Offer.prototype);
         RentOffer.prototype.constructor = this;
 
+        RentOffer.prototype.toString = function () {
+            return Offer.prototype.toString.call(this);
+        }
+
         return RentOffer;
     }());
 
     var SaleOffer = (function () {
         function SaleOffer(estate, price) {
             Offer.call(this, estate, price);
-            this._type = "SaleOffer";
+            this._type = "Sale";
         }
 
         SaleOffer.prototype = Object.create(Offer.prototype);
@@ -355,6 +388,10 @@
                     return executeStatusCommand();
                 case 'find-sales-by-location':
                     return executeFindSalesByLocationCommand(cmdArgs[0]);
+                case 'find-rents-by-location':
+                    return executeFindRentsByLocationCommand(cmdArgs[0]);
+                case 'find-rents-by-price':
+                    return executeFindRentsByPriceCommand(cmdArgs[0], cmdArgs[1]);
                 default:
                     throw new Error('Unknown command: ' + cmdName);
             }
@@ -464,6 +501,47 @@
             });
             selectedOffers.sort(function (a, b) {
                 return a.getEstate().getName().localeCompare(b.getEstate().getName());
+            });
+            return formatQueryResults(selectedOffers);
+        }
+
+        function executeFindRentsByLocationCommand(location) {
+            if (!location) {
+                throw new Error("Location cannot be empty.");
+            }
+            var selectedOffers = _offers.filter(function (offer) {
+                return offer.getEstate().getLocation() === location &&
+                    offer instanceof RentOffer;
+            });
+            selectedOffers.sort(function (a, b) {
+                return a.getEstate().getName().localeCompare(b.getEstate().getName());
+            });
+            return formatQueryResults(selectedOffers);
+        }
+
+        function executeFindRentsByPriceCommand(minPrice, maxPrice) {
+
+            if ((minPrice % 1) !== 0 || (maxPrice % 1) !== 0) {
+                throw new Error("min and max prices should be integers.");
+            }
+            if (!Helpers.isInteger(parseInt(minPrice)) || !Helpers.isInteger(parseInt(maxPrice))) {
+                throw  new Error("minPrice and maxPrice should be integers.");
+            }
+
+            minPrice = parseInt(minPrice);
+            maxPrice = parseInt(maxPrice);
+
+            var selectedOffers = _offers.filter(function (offer) {
+                return offer instanceof RentOffer &&
+                    offer.getPrice() >= minPrice &&
+                    offer.getPrice() <= maxPrice
+            });
+            selectedOffers.sort(function (a, b) {
+                if (a.getPrice() == b.getPrice()) {
+                    return a.getEstate().getName().localeCompare(b.getEstate().getName());
+                } else {
+                    return a.getPrice() > b.getPrice();
+                }
             });
             return formatQueryResults(selectedOffers);
         }
