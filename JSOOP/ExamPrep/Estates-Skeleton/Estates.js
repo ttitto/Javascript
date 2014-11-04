@@ -1,55 +1,65 @@
-﻿var Helpers = (function () {
-    function isBoolean(value, message) {
-        switch (value) {
-            case true:
-            case false:
-                return true;
-            default:
-                throw new Error(message);
-        }
-    }
-
-    function validateIsString(value, message) {
-        if (typeof value != "string") {
-            throw new Error(message);
-        }
-
-        return value;
-    }
-
-    function isInteger(value) {
-        return ((value ^ 0) === value);
-    }
-
-    function validateStringIsEmpty(value, message) {
-        if (value.length < 1) {
-            throw new Error(message);
-        }
-
-        return value;
-    }
-
-    function validateRange(value, min, max, message) {
-        if (value < min || value > max) {
-            throw  new Error(message);
-        }
-
-        return value;
-    }
-
-    return {
-        isBoolean: isBoolean,
-        isInteger: isInteger,
-        validateIsString: validateIsString,
-        validateStringIsEmpty: validateStringIsEmpty,
-        validateRange: validateRange
-    }
-}());
-
-function processEstatesAgencyCommands(commands) {
+﻿function processEstatesAgencyCommands(commands) {
 
     'use strict';
+    var Helpers = (function () {
+        function isBoolean(value, message) {
+            switch (value) {
+                case true:
+                case false:
+                    return true;
+                default:
+                    throw new Error(message);
+            }
+        }
 
+        function validateIsString(value, message) {
+            if (typeof value != "string") {
+                throw new Error(message);
+            }
+
+            return value;
+        }
+
+        function isInteger(value) {
+            return ((value ^ 0) === value);
+        }
+
+        function validateStringIsEmpty(value, message) {
+            if (value.length < 1) {
+                throw new Error(message);
+            }
+
+            return value;
+        }
+
+        function validateRange(value, min, max, message) {
+            if (value < min || value > max) {
+                throw  new Error(message);
+            }
+
+            return value;
+        }
+
+        if (!String.prototype.format) {
+            String.prototype.format = function () {
+                var args = arguments;
+                return this.replace(/{(\d+)}/g, function (match, number) {
+                    return typeof args[number] != 'undefined'
+                        ? args[number]
+                        : match
+                        ;
+                });
+            };
+        }
+
+        return {
+            isBoolean: isBoolean,
+            isInteger: isInteger,
+            validateIsString: validateIsString,
+            validateStringIsEmpty: validateStringIsEmpty,
+            validateRange: validateRange
+        }
+    }());
 
     var Estate = (function () {
         function Estate(name, area, location, isFurnitured) {
@@ -80,6 +90,7 @@ function processEstatesAgencyCommands(commands) {
             if (!Helpers.isInteger(area)) {
                 throw  new Error("Estate's area should be integer.");
             }
+
             this._area = Helpers.validateRange(area, 1, 10000, "Estate area should be in the range [1 - 10000]");
         };
 
@@ -106,24 +117,96 @@ function processEstatesAgencyCommands(commands) {
             return this._type;
         };
 
+        Estate.prototype.toString = function () {
+            var furnitured = this.getIsFurnitured() ? "Yes" : "No";
+
+            var estateStr = this._type + ": Name = " + this.getName() +
+                ", Area = " + this.getArea() +
+                ", Location = " + this.getLocation() +
+                ", Furnitured = " + furnitured;
+
+            return estateStr;
+        }
+
         return Estate;
     }());
 
+    var BuildingEstate = (function () {
+        var BuildingEstate = function (name, area, location, isFurnitured, rooms, hasElevator) {
+            if (this.constructor === BuildingEstate) {
+                throw  new Error("Can not instantiate abstract class BuildingEstate");
+            }
 
-    var BuildingEstate = function () {
-        // TODO: define the missing class 
-    };
+            Estate.call(this, name, area, location, isFurnitured);
+            this.setRooms(rooms);
+            this.setHasElevator(hasElevator);
+            this._type = "BuildingEstate";
+        }
 
+        BuildingEstate.prototype = Estate.prototype;
+        BuildingEstate.prototype.constructor = this;
 
-    var Apartment = function () {
-        // TODO: define the missing class 
-    };
+        BuildingEstate.prototype.getRooms = function () {
+            return this._rooms;
+        }
 
+        BuildingEstate.prototype.setRooms = function (rooms) {
+            if (!Helpers.isInteger(rooms)) {
+                throw  new Error("Building Estate's rooms should be integer number!");
+            }
 
-    var Office = function () {
-        // TODO: define the missing class 
-    };
+            this._rooms = Helpers.validateRange(rooms, 1, 100, "Building estate's rooms count should be in the range [1 - 100]");
+        }
 
+        BuildingEstate.prototype.getHasElevator = function () {
+            return this._hasElevator;
+        }
+
+        BuildingEstate.prototype.setHasElevator = function (hasElevator) {
+            if (Helpers.isBoolean(hasElevator, "Building estates' hasElevator should be of type boolean.")) {
+                this._hasElevator = hasElevator;
+            }
+        }
+
+        BuildingEstate.prototype.toString = function () {
+            var estateStr = Estate.prototype.toString.call(this);
+            var elevator = this.getHasElevator() ? "Yes" : "No";
+
+            var beStr = estateStr + ", Rooms: " + this.getRooms() + ", Elevator: " + elevator;
+
+            return beStr;
+        }
+
+        return BuildingEstate;
+    }());
+
+    var Apartment = (function () {
+        function Apartment(name, area, location, isFurnitured, rooms, hasElevator) {
+            BuildingEstate.call(this, name, area, location, isFurnitured, rooms, hasElevator);
+            this._type = "Apartment";
+        }
+
+        Apartment.prototype = BuildingEstate.prototype;
+        Apartment.prototype.constructor = this;
+
+        Apartment.prototype.toString = function () {
+            return BuildingEstate.prototype.toString.call(this);
+        }
+
+        return Apartment;
+    }());
+
+    var Office = (function () {
+        function Office(name, area, location, isFurnitured, rooms, hasElevator) {
+            BuildingEstate.call(this, name, area, location, isFurnitured, rooms, hasElevator);
+            this._type = "Office";
+        }
+
+        Office.prototype = BuildingEstate.prototype;
+        Office.prototype.constructor = this;
+
+        return Office;
+    }());
 
     var House = (function () {
         function House(name, area, location, isFurnitured, floors) {
@@ -163,7 +246,7 @@ function processEstatesAgencyCommands(commands) {
 
         Garage.prototype.setWidth = function (width) {
             if (!Helpers.isInteger(width)) {
-                throw    new Error("Garage's width should be integer.");
+                throw new Error("Garage's width should be integer.");
             }
 
             this._width = Helpers.validateRange(width, 1, 500, "Garage's width should be in the range [1 - 500]");
@@ -175,7 +258,7 @@ function processEstatesAgencyCommands(commands) {
 
         Garage.prototype.setHeight = function (height) {
             if (!Helpers.isInteger(height)) {
-                throw    new Error("Garage's height should be integer.");
+                throw new Error("Garage's height should be integer.");
             }
 
             this._height = Helpers.validateRange(height, 1, 500, "Garage's height should be in the range [1 - 500]");
@@ -184,19 +267,61 @@ function processEstatesAgencyCommands(commands) {
         return Garage;
     }());
 
-    var Offer = function () {
-        // TODO: define the missing class 
-    };
+    var Offer = (function () {
+        function Offer(estate, price) {
+            if (this.constructor === Offer) {
+                throw new Error("Can not instantiate abstract class Offer.");
+            }
 
+            this.setEstate(estate);
+            this.setPrice(price);
+            this._type = "Offer";
+        }
 
-    var RentOffer = function () {
-        // TODO: define the missing class 
-    };
+        Offer.prototype.constructor = this;
 
+        Offer.prototype.getEstate = function () {
+            return this._estate;
+        }
 
-    var SaleOffer = function () {
-        // TODO: define the missing class 
-    };
+        Offer.prototype.setEstate = function (estate) {
+            this._estate = estate;
+        }
+
+        Offer.prototype.getPrice = function () {
+            return this._price;
+        }
+
+        Offer.prototype.setPrice = function (price) {
+            this._price = price;
+        }
+
+        return Offer;
+    }());
+
+    var RentOffer = (function () {
+        function RentOffer(estate, price) {
+            Offer.call(this, estate, price);
+            this._type = "RentOffer";
+        }
+
+        RentOffer.prototype = Offer.prototype;
+        RentOffer.prototype.constructor = this;
+
+        return RentOffer;
+    }());
+
+    var SaleOffer = (function () {
+        function SaleOffer(estate, price) {
+            Offer.call(this, estate, price);
+            this._type = "SaleOffer";
+        }
+
+        SaleOffer.prototype = Offer.prototype;
+        SaleOffer.prototype.constructor = this;
+
+        return SaleOffer;
+    }());
 
     var EstatesEngine = (function () {
         var _estates;
