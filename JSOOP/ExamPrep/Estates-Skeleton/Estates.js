@@ -143,7 +143,7 @@
             this._type = "BuildingEstate";
         }
 
-        BuildingEstate.prototype = Estate.prototype;
+        BuildingEstate.prototype = Object.create(Estate.prototype);
         BuildingEstate.prototype.constructor = this;
 
         BuildingEstate.prototype.getRooms = function () {
@@ -186,11 +186,11 @@
             this._type = "Apartment";
         }
 
-        Apartment.prototype = BuildingEstate.prototype;
+        Apartment.prototype = Object.create(BuildingEstate.prototype);
         Apartment.prototype.constructor = this;
 
         Apartment.prototype.toString = function () {
-            return BuildingEstate.prototype.toString.call(this);
+            return BuildingEstate.prototype.toString.call(this)
         }
 
         return Apartment;
@@ -202,8 +202,12 @@
             this._type = "Office";
         }
 
-        Office.prototype = BuildingEstate.prototype;
+        Office.prototype = Object.create(BuildingEstate.prototype);
         Office.prototype.constructor = this;
+
+        Office.prototype.toString = function () {
+            return BuildingEstate.prototype.toString.call(this);
+        }
 
         return Office;
     }());
@@ -215,7 +219,7 @@
             this.setFloors(floors);
         }
 
-        House.prototype = Estate.prototype;
+        House.prototype = Object.create(Estate.prototype);
         House.prototype.constructor = this;
 
         House.prototype.getFloors = function () {
@@ -225,6 +229,12 @@
         House.prototype.setFloors = function (floors) {
             this._floors = Helpers.validateRange(floors, 1, 10, "House floors should be in the range [1 - 10]");
         };
+
+        House.prototype.toString.call(this)
+        {
+            var houseStr = Estate.prototype.toString.call(this);
+
+        }
 
         return House;
     }());
@@ -237,7 +247,7 @@
             this._type = "Garage";
         }
 
-        Garage.prototype = Estate.prototype;
+        Garage.prototype = Object.create(Estate.prototype);
         Garage.prototype.constructor = this;
 
         Garage.prototype.getWidth = function () {
@@ -302,10 +312,10 @@
     var RentOffer = (function () {
         function RentOffer(estate, price) {
             Offer.call(this, estate, price);
-            this._type = "RentOffer";
+            this._type = "Rent";
         }
 
-        RentOffer.prototype = Offer.prototype;
+        RentOffer.prototype = Object.create(Offer.prototype);
         RentOffer.prototype.constructor = this;
 
         return RentOffer;
@@ -317,7 +327,7 @@
             this._type = "SaleOffer";
         }
 
-        SaleOffer.prototype = Offer.prototype;
+        SaleOffer.prototype = Object.create(Offer.prototype);
         SaleOffer.prototype.constructor = this;
 
         return SaleOffer;
