@@ -1,0 +1,56 @@
+html, body, div, span, h1, h2, header, section {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    border: darkgray solid 2px;
+    padding: 10px;
+}
+
+.container > header h1 {
+    text-align: center;
+}
+
+.container > header h1 span {
+    font-style: italic;
+}
+
+.container .sections {
+    border: darkgray solid 2px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.container .sections .items {
+    border: darkgray solid thin;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.container .sections .items label {
+    display: inline-block;
+    width: 92%;
+    border-bottom: black solid 2px;
+}
+
+.container .sections .items .item input {
+    /*float: left;*/
+}
+
+.todo-section-title {
+    text-align: right;
+}
+
+.add-item-frm {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+#add-section-frm{
+    margin: 10px 0 ;
+}
+input[type='checkbox']:checked + label {
+    background-color: lawngreen;
+}

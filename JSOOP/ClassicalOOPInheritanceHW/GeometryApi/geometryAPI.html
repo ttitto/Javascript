@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geometry API</title>
+    <link rel="stylesheet" href="geometryApi.css" type="text/css"/>
+</head>
+<body>
+<form id="data-input-form">
+    <div id="shape-inputs">
+        <label for="shape-list">Shape</label>
+        <select name="shape-list" id="shape-list"> </select>
+
+        <label for="color-input">Color:</label>
+        <input id="color-input" name="color-input" type="color"/>
+    </div>
+    <div id="params-inputs"></div>
+    <div id="bottom-buttons">
+        <input type="button" id="add-shape-button" value="Add"/>
+    </div>
+</form>
+
+<div id="current-shapes-container">
+    <select name="current-shapes" id="current-shapes" multiple="multiple"> </select>
+    <div id="side-buttons">
+        <input type="button" id="up-button" class="right" value="up"/>
+        <input type="button" id="down-button" class="right" value="down"/>
+        <input type="button" id="remove-shape-button" class="right" value="-"/>
+    </div>
+</div>
+
+
+<canvas id="drawing-field" width="900" height="500"></canvas>
+
+<script src="shapes.js" type="text/javascript"></script>
+<script src="geometryApi.js" type="text/javascript"></script>
+</body>
+</html>
