@@ -118,20 +118,20 @@ var someFigures = (function () {
     }());
 
     var Bike = (function () {
-        function drawBike(ctx) {
-            ctx.strokeStyle = '#22545F';
-            ctx.fillStyle = '#90CAD7';
-            ctx.lineWidth = 5;
+        function drawBike(context) {
+            context.strokeStyle = '#22545F';
+            context.fillStyle = '#90CAD7';
+            context.lineWidth = 5;
 
-            CanvasUtils.drawEllipse(ctx, 446, 548, 93, 1, 1, 0, 2 * Math.PI, true, true);
-            CanvasUtils.drawEllipse(ctx, 95, 548, 93, 1, 1, 0, 2 * Math.PI, true, true);
+            CanvasUtils.drawEllipse(context, 446, 548, 93, 1, 1, 0, 2 * Math.PI, true, true);
+            CanvasUtils.drawEllipse(context, 95, 548, 93, 1, 1, 0, 2 * Math.PI, true, true);
 
-            CanvasUtils.drawPolygone(ctx, [446, 540, 415, 358, 464, 302, 415, 358, 341, 384], false, false, true);
-            CanvasUtils.drawPolygone(ctx,
+            CanvasUtils.drawPolygone(context, [446, 540, 415, 358, 464, 302, 415, 358, 341, 384], false, false, true);
+            CanvasUtils.drawPolygone(context,
                 [253, 539, 422, 426, 203, 426, 90, 544, 253, 539, 175, 383, 212, 384, 175, 383, 136, 383], false, false, true);
-            CanvasUtils.drawEllipse(ctx, 251, 539, 26, 1, 1, 0, 2 * Math.PI, false, true);
-            CanvasUtils.drawPolygone(ctx, [284, 577, 268, 558], false, false, true);
-            CanvasUtils.drawPolygone(ctx, [235, 520, 218, 499], false, false, true);
+            CanvasUtils.drawEllipse(context, 251, 539, 26, 1, 1, 0, 2 * Math.PI, false, true);
+            CanvasUtils.drawPolygone(context, [284, 577, 268, 558], false, false, true);
+            CanvasUtils.drawPolygone(context, [235, 520, 218, 499], false, false, true);
         }
 
         return {
@@ -144,44 +144,48 @@ var someFigures = (function () {
             var sx = 685,
                 sy = 293;
 
-            ctx.fillStyle = '#975B5B';
-            ctx.lineWidth = 4;
+            context.fillStyle = '#975B5B';
+            context.lineWidth = 4;
 
-            ctx.fillRect(651, 250, 450, 338);
-            ctx.strokeRect(651, 250, 450, 338);
+            context.fillRect(651, 250, 450, 338);
+            context.strokeRect(651, 250, 450, 338);
 
-            CanvasUtils.drawPolygone(ctx, [651, 250, 876, 0, 1101, 250], true, true, true);
-            CanvasUtils.drawPolygone(ctx, [965, 190, 965, 63, 1015 , 63, 1015, 190], false, true, true);
-            CanvasUtils.drawEllipse(ctx, 990, 63, 25, 1, 0.35, 0, 2 * Math.PI, true, true);
+            CanvasUtils.drawPolygone(context, [651, 250, 876, 0, 1101, 250], true, true, true);
+            CanvasUtils.drawPolygone(context, [965, 190, 965, 63, 1015 , 63, 1015, 190], false, true, true);
+            CanvasUtils.drawEllipse(context, 990, 63, 25, 1, 0.35, 0, 2 * Math.PI, true, true);
 
-            ctx.fillStyle = 'black';
-            ctx.fillRect(sx, sy, 77, 49);
-            ctx.fillRect(sx + 81, sy, 77, 49);
-            ctx.fillRect(sx, sy + 54, 77, 49);
-            ctx.fillRect(sx + 81, sy + 54, 77, 49);
+            context.fillStyle = 'black';
+            context.fillRect(sx, sy, 77, 49);
+            context.fillRect(sx + 81, sy, 77, 49);
+            context.fillRect(sx, sy + 54, 77, 49);
+            context.fillRect(sx + 81, sy + 54, 77, 49);
 
             sx = sx + 219;
-            ctx.fillRect(sx, sy, 77, 49);
-            ctx.fillRect(sx + 81, sy, 77, 49);
-            ctx.fillRect(sx, sy + 54, 77, 49);
-            ctx.fillRect(sx + 81, sy + 54, 77, 49);
+            context.fillRect(sx, sy, 77, 49);
+            context.fillRect(sx + 81, sy, 77, 49);
+            context.fillRect(sx, sy + 54, 77, 49);
+            context.fillRect(sx + 81, sy + 54, 77, 49);
 
             sy += 142;
-            ctx.fillRect(sx, sy, 77, 49);
-            ctx.fillRect(sx + 81, sy, 77, 49);
-            ctx.fillRect(sx, sy + 54, 77, 49);
-            ctx.fillRect(sx + 81, sy + 54, 77, 49);
+            context.fillRect(sx, sy, 77, 49);
+            context.fillRect(sx + 81, sy, 77, 49);
+            context.fillRect(sx, sy + 54, 77, 49);
+            context.fillRect(sx + 81, sy + 54, 77, 49);
 
-            CanvasUtils.drawEllipse(ctx, 746, 543, 7, 1, 1, 0, 2 * Math.PI, false, true);
-            CanvasUtils.drawEllipse(ctx, 782, 543, 7, 1, 1, 0, 2 * Math.PI, false, true);
-            CanvasUtils.drawPolygone(ctx,[700, 590, 700, 475], false, false, true);
-            CanvasUtils.drawPolygone(ctx,[825, 590, 825, 475], false, false, true);
-            CanvasUtils.drawPolygone(ctx,[763, 590, 763, 440], false, false, true);
+            CanvasUtils.drawEllipse(context, 746, 543, 7, 1, 1, 0, 2 * Math.PI, false, true);
+            CanvasUtils.drawEllipse(context, 782, 543, 7, 1, 1, 0, 2 * Math.PI, false, true);
+            CanvasUtils.drawPolygone(context, [700, 590, 700, 475], false, false, true);
+            CanvasUtils.drawPolygone(context, [825, 590, 825, 475], false, false, true);
+            CanvasUtils.drawPolygone(context, [763, 590, 763, 440], false, false, true);
 
-            ctx.beginPath();
-            ctx.moveTo(700, 475);
-            ctx.quadraticCurveTo(730, 425, 763, 440);
-            ctx.stroke();
+            context.beginPath();
+            context.moveTo(700, 475);
+            context.quadraticCurveTo(710, 440, 763, 440);
+            context.stroke();
+            context.beginPath();
+            context.moveTo(763, 440);
+            context.quadraticCurveTo(828, 440, 825, 475);
+            context.stroke();
         }
 
         return  {
@@ -189,7 +193,7 @@ var someFigures = (function () {
         }
     }());
 
-    var drawingApi = (function () {
+    (function () {
         Gentleman.drawGentleman(ctx);
         Bike.drawBike(ctx);
         House.drawHouse(ctx);
