@@ -216,7 +216,6 @@ function processRestaurantManagerCommands(commands) {
             };
 
             Recipe.prototype.setMeasureUnit = function (measureUnit) {
-                // TODO: probably validation needed
                 this._measureUnit = measureUnit;
             };
 
@@ -225,6 +224,7 @@ function processRestaurantManagerCommands(commands) {
             };
 
             Recipe.prototype.setTimeToPrepare = function (timeToPrepare) {
+                timeToPrepare = parseInt(timeToPrepare);
                 if (!(typeof timeToPrepare == 'number')) {
                     throw  new TypeError("TimeToPrepare should be of type number");
                 }
@@ -250,30 +250,162 @@ function processRestaurantManagerCommands(commands) {
         }());
 
         var Drink = (function () {
-            function Drink(){
-
+            function Drink(name, price, calories, quantityPerServing, timeToPrepare, isCarbonated){
+                Recipe.call(this, name, price, calories, quantityPerServing, Unit.Millilitres, timeToPrepare );
+                this.setIsCarbonated(isCarbonated);
+                this.setCalories(calories);
+                this.setTimeToPrepare(timeToPrepare);
             }
 
             Drink.prototype = Object.create(Recipe.prototype);
+            Drink.prototype.constructor = this;
+
+            Drink.prototype.setCalories = function(calories){
+              this._calories = Helpers.validateRange(calories, 0, 100, "The calories of the drink should be in the range [0 - 100]");
+            };
+
+            Drink.prototype.setTimeToPrepare = function(timeToPrepare){
+              this._timeToPrepare = Helpers.validateRange(timeToPrepare, 0, 20, "The time to prepare of a drink must be less than 20 mins");
+            };
+
+            Drink.prototype.getIsCarbonated = function(){
+                return this._isCarbonated;
+            };
+
+            Drink.prototype.setIsCarbonated = function (isCarbonated){
+              this._isCarbonated = isCarbonated;
+            };
+
+            Drink.prototype.toString = function(){
+                var drinkStr = Recipe.prototype.toString.call(this);
+                drinkStr += '\nCarbonated: {0}'.format(this.getIsCarbonated() === true?'yes':'no');
+                return drinkStr;
+            }
 
             return Drink;
         }());
 
-        var Meal = function () {
-            // TODO: Not implemented
-        }
+        var Meal = (function () {
+           function Meal(name, price, calories, quantityPerServing, timeToPrepare, isVegan){
+               if(this.constructor === Meal){
+                   throw  new Error('You can not instantiate abstract class Meal');
+               }
 
-        var Dessert = function () {
-            // TODO: Not implemented
-        }
+               Recipe.call(this, name, price, calories, quantityPerServing, Unit.Grams, timeToPrepare);
+               this.setIsVegan(isVegan);
+           }
 
-        var MainCourse = function () {
-            // TODO: Not implemented
-        }
+            Meal.prototype = Object.create(Recipe.prototype);
+            Meal.prototype.constructor = this;
 
-        var Salad = function () {
-            // TODO: Not implemented
-        }
+            Meal.prototype.getIsVegan  = function(){
+                return this._isVegan;
+            };
+
+            Meal.prototype.setIsVegan = function(isVegan){
+                this._isVegan = isVegan;
+            };
+
+            Meal.prototype.toggleVegan = function(){
+                this._isVegan = !this._isVegan;
+            };
+
+            Meal.prototype.toString = function(){
+                var mealStr = Recipe.prototype.toString.call(this);
+                if(this._isVegan == true){
+                    mealStr = '[VEGAN] ' + mealStr;
+                }
+
+                return mealStr;
+            };
+
+            return Meal;
+        }());
+
+        var Dessert = (function () {
+           function Dessert (name, price, calories, quantityPerServing, timeToPrepare, isVegan){
+               Meal.call(this, name, price, calories, quantityPerServing, timeToPrepare, isVegan);
+               this.setHasSugar(true);
+           }
+
+            Dessert.prototype = Object.create(Meal.prototype);
+            Dessert.prototype.constructor = this;
+
+            Dessert.prototype.getHasSugar = function(){
+              return this._hasSugar;
+            };
+
+            Dessert.prototype.setHasSugar = function(hasSugar){
+                this._hasSugar = hasSugar;
+            };
+
+            Dessert.prototype.toggleSugar = function(){
+                this._hasSugar = !this._hasSugar;
+            };
+
+            Dessert.prototype.toString = function(){
+                var dessertStr = Meal.prototype.toString.call(this);
+              if(!this._hasSugar){
+                  dessertStr = '[NO SUGAR] ' + dessertStr;
+              }
+
+                return dessertStr;
+            };
+
+            return Dessert;
+        }());
+
+        var MainCourse = (function () {
+            function MainCourse (name, price, calories, quantityPerServing, timeToPrepare, isVegan, type){
+                Meal.call(this, name, price, calories, quantityPerServing, timeToPrepare, isVegan);
+                this.setType(type);
+            }
+
+            MainCourse.prototype = Object.create(Meal.prototype);
+            MainCourse.prototype.constructor = this;
+
+            MainCourse.prototype.getType = function(){
+                return this._type;
+            };
+
+            MainCourse.prototype.setType = function(type){
+                this._type = type;
+            };
+
+            MainCourse.prototype.toString = function(){
+                var mainCourseStr = Meal.prototype.toString.call(this);
+                mainCourseStr += '\nType: {0}'.format(this.getType());
+                return mainCourseStr;
+            };
+
+            return MainCourse;
+        }());
+
+        var Salad = (function () {
+            function Salad(name, price, calories, quantityPerServing, timeToPrepare, containsPasta){
+                Meal.call(this, name, price, calories, quantityPerServing, timeToPrepare, true);
+                this.setContainsPasta(containsPasta);
+            }
+
+            Salad.prototype = Object.create(Meal.prototype);
+            Salad.prototype.constructor = this;
+
+            Salad.prototype.getContainsPasta = function(){
+                return this._containsPasta;
+            };
+
+            Salad.prototype.setContainsPasta = function(containsPasta){
+                this._containsPasta = containsPasta;
+            };
+
+            Salad.prototype.toString = function(){
+                var saladStr = Meal.prototype.toString.call(this);
+                saladStr += '\nContains pasta: {0}'.format(this.getContainsPasta() == true?'yes': 'no');
+                return saladStr;
+            };
+
+            return Salad;
+        }());
 
         var Command = (function () {
 
