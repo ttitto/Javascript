@@ -53,11 +53,31 @@ function processRestaurantManagerCommands(commands) {
 
                 return this;
             };
+
+            Number.prototype.isPositive = function (errorMessage) {
+                if (this <= 0) {
+                    throw  new RangeError(errorMessage);
+                }
+
+                return this;
+            };
+
+            Number.prototype.isNonNegative = function (errorMessage) {
+                if (this < 0) {
+                    throw  new RangeError(errorMessage);
+                }
+
+                return this;
+            }
         }());
     }());
 
     var RestaurantEngine = (function () {
-        var _restaurants, _recipes;
+        var _restaurants, _recipes,
+            Unit = {
+                Grams: 'g',
+                Millilitres: 'ml'
+            };
 
         function initialize() {
             _restaurants = [];
@@ -77,8 +97,6 @@ function processRestaurantManagerCommands(commands) {
                         return this._name;
                     },
                     set: function (value) {
-                        // TODO: validate name
-
                         this._name = value
                             .isString("Restaurant name should be of type string.")
                             .isNullEmptyUndefined("Restaurant name shouldn't be null, empty or undefined");
@@ -94,39 +112,92 @@ function processRestaurantManagerCommands(commands) {
                             .isNullEmptyUndefined("Restaurant location shouldn't be null, empty or undefined");
                     }
                 },
-                toString: {
+                recipes: {
+                    get: function () {
+                        return this._recipes;
+                    }
+                },
+                addRecipe: {
+                    value: function (recipe) {
+                        this._recipes.push(recipe);
+                    }
+                },
+                removeRecipe: {
+                    value: function (recipe) {
+                        this._recipes.splice(this._recipes.indexOf(recipe), 1);
+                    }
+                },
+                printRestaurantMenu: {
                     value: function () {
                         var recipesStr = '',
                             drinks = [],
                             salads = [],
                             mainCourses = [],
-                            desserts = [];// TODO: Restaurant toString recipes
+                            desserts = [];
 
-                        for (var i = 0; i < this.recipes.length; i++) {
-                            var recipe = this.recipes[i];
-                            if (typeof recipe === 'Drink') {
-                                drinks.push(recipe);
-                            } else if (typeof recipe === 'Salad') {
-                                salads.push(recipe);
-                            } else if (typeof recipe === 'MainCourse') {
-                                mainCourses.push(recipe);
-                            } else if (typeof recipe === 'Dessert') {
-                                desserts.push(recipe);
+                        if (this.recipes.length == 0) {
+                            recipesStr = '\nNo recipes... yet';
+                        } else {
+
+                            for (var i = 0; i < this.recipes.length; i++) {
+                                var recipe = this.recipes[i];
+                                if (recipe instanceof Drink) {
+                                    drinks.push(recipe);
+                                } else if (recipe instanceof Salad) {
+                                    salads.push(recipe);
+                                } else if (recipe instanceof MainCourse) {
+                                    mainCourses.push(recipe);
+                                } else if (recipe instanceof Dessert) {
+                                    desserts.push(recipe);
+                                }
+                            }
+
+                            if (drinks.length > 0) {
+                                recipesStr += '\n~~~~~ DRINKS ~~~~~';
+                                drinks.sort(function (a, b) {
+                                    return  a.name > b.name;
+                                });
+
+                                drinks.forEach(function (drink) {
+                                    recipesStr += '\n' + drink.toString();
+                                });
+                            }
+
+                            if (salads.length > 0) {
+                                recipesStr += '\n~~~~~ SALADS ~~~~~';
+                                salads.sort(function (a, b) {
+                                    return a.name > b.name;
+                                });
+
+                                salads.forEach(function (salad) {
+                                    recipesStr += '\n' + salad.toString();
+                                });
+                            }
+
+                            if (mainCourses.length > 0) {
+                                recipesStr += '\n~~~~~ MAIN COURSES ~~~~~';
+                                mainCourses.sort(function (a, b) {
+                                    return a.name > b.name;
+                                });
+
+                                mainCourses.forEach(function (mainCourse) {
+                                    recipesStr += '\n' + mainCourse.toString();
+                                });
+                            }
+
+                            if (desserts.length > 0) {
+                                recipesStr += '\n~~~~~ DESSERTS ~~~~~';
+                                desserts.sort(function (a, b) {
+                                    return a.name > b.name;
+                                });
+
+                                desserts.forEach(function (dessert) {
+                                    recipesStr += '\n' + dessert.toString();
+                                });
                             }
                         }
 
-                        if (drinks.length > 0) {
-                            recipesStr += '~~~~~ DRINKS ~~~~~\n'
-                            drinks.sort(function (a, b) {
-                                a.name < b.name;
-                            });
-
-                            for (var i = 0; i < drinks.length; i++) {
-                                recipesStr += drinks[i].toString();
-                            }
-                        }
-
-                        return '***** {0} - {1} *****\n{3}'.format(
+                        return '***** {0} - {1} *****{2}'.format(
                             this.name,
                             this.location,
                             recipesStr
@@ -138,29 +209,257 @@ function processRestaurantManagerCommands(commands) {
             return Restaurant;
         }());
 
-        var Recipe = function () {
-            // TODO: Not implemented
-        }
+        var Recipe = (function () {
+            function Recipe(name, price, calories, quantity, timeToPrepare, measureUnit) {
+                if (this.constructor === Recipe) {
+                    throw new Error('Cannot instantiate abstract class Recipe.');
+                }
 
-        var Drink = function () {
-            // TODO: Not implemented
-        }
+                this.name = name;
+                this.price = price;
+                this.calories = calories;
+                this.quantity = quantity;
+                this.timeToPrepare = timeToPrepare;
+                this.measureUnit = measureUnit;
+            }
 
-        var Meal = function () {
-            // TODO: Not implemented
-        }
+            Object.defineProperties(Recipe.prototype, {
+                name: {
+                    get: function () {
+                        return this._name;
+                    },
+                    set: function (value) {
+                        this._name = value
+                            .isString('Recipe name should be of type string.')
+                            .isNullEmptyUndefined('Recipe name shouldn\'t be null, empty nor undefined');
+                    }
+                },
+                price: {
+                    get: function () {
+                        return this._price;
+                    },
+                    set: function (value) {
+                        this._price = value
+//                            .isNumber("Recipe price should be of type number")
+                            .isPositive('Recipe price should be positive number.');
+                    }
+                },
+                calories: {
+                    get: function () {
+                        return this._calories;
+                    },
+                    set: function (value) {
+                        this._calories = value
+//                            .isNumber("Recipe calories should be of type number")
+                            .isPositive("Recipe calories should be positive number");
+                    }
+                },
+                quantity: {
+                    get: function () {
+                        return this._quantity;
+                    },
+                    set: function (value) {
+                        this._quantity = value
+//                            .isNumber("Recipe quantity should be of type number.")
+                            .isPositive("Recipe quantity should be positive number");
+                    }
+                },
+                timeToPrepare: {
+                    get: function () {
+                        return this._timeToPrepare;
+                    },
+                    set: function (value) {
+                        this._timeToPrepare = value;
+//                            .isNumber("Recipe timeToPrepare should be of type number.")
+//                            .isPositive("Recipe timeToPrepare should be positive number");
+                    }
+                },
+                measureUnit: {
+                    get: function () {
+                        return this._measureUnit;
+                    },
+                    set: function (value) {
+                        this._measureUnit = value;
+                    }
+                },
+                toString: {
+                    value: function () {
+                        return '==  {0} == ${1}\nPer serving: {2} {3}, {4} kcal\nReady in {5} minutes'
+                            .format(
+                                this.name,
+                                this.price.toFixed(2),
+                                this.quantity,
+                                this.measureUnit,
+                                this.calories,
+                                this.timeToPrepare
+                            );
+                    }
+                }
+            });
 
-        var Dessert = function () {
-            // TODO: Not implemented
-        }
+            return Recipe;
+        }());
 
-        var MainCourse = function () {
-            // TODO: Not implemented
-        }
+        var Drink = (function () {
+            function Drink(name, price, calories, quantity, timeToPrepare, isCarbonated) {
+                Recipe.call(this, name, price, calories, quantity, timeToPrepare, Unit.Millilitres);
+                this.isCarbonated = isCarbonated;
+            }
 
-        var Salad = function () {
-            // TODO: Not implemented
-        }
+            Drink.prototype = Object.create(Recipe.prototype);
+            Drink.prototype.constructor = this;
+
+            Object.defineProperties(Drink.prototype, {
+                isCarbonated: {
+                    get: function () {
+                        return this._isCarbonated;
+                    },
+                    set: function (value) {
+                        this._isCarbonated = value;
+                    }
+                },
+                toString: {
+                    value: function () {
+                        var drinkStr = Recipe.prototype.toString.call(this);
+                        return drinkStr + '\nCarbonated: {0}'
+                            .format(this.isCarbonated ? 'yes' : 'no');
+                    }
+                }
+            });
+
+            return Drink;
+        }());
+
+        var Meal = (function () {
+            function Meal(name, price, calories, quantity, timeToPrepare, isVegan) {
+                if (this.constructor === Meal) {
+                    throw new Error('Cannot instantiate abstract class Meal.');
+                }
+
+                Recipe.call(this, name, price, calories, quantity, timeToPrepare, Unit.Grams);
+                this.isVegan = isVegan;
+            }
+
+            Meal.prototype = Object.create(Recipe.prototype);
+            Meal.prototype.constructor = this;
+
+            Object.defineProperties(Meal.prototype, {
+                isVegan: {
+                    get: function () {
+                        return this._isVegan;
+                    },
+                    set: function (value) {
+                        this._isVegan = value;
+                    }
+                },
+                toggleVegan: {
+                    value: function () {
+                        this.isVegan = !this.isVegan
+                    }
+                },
+                toString: {
+                    value: function () {
+                        var recipeStr = Recipe.prototype.toString.call(this);
+                        return (this.isVegan ? '[VEGAN] ' : '') + recipeStr;
+                    }
+                }
+            });
+
+            return Meal;
+        }());
+
+        var Dessert = (function () {
+            function Dessert(name, price, calories, quantity, timeToPrepare, isVegan) {
+                Meal.call(this, name, price, calories, quantity, timeToPrepare, isVegan);
+                this.withSugar = true;
+            }
+
+            Dessert.prototype = Object.create(Meal.prototype);
+            Dessert.prototype.constructor = this;
+
+            Object.defineProperties(Dessert.prototype, {
+                withSugar: {
+                    get: function () {
+                        return this._withSugar;
+                    },
+                    set: function (value) {
+                        this._withSugar = value;
+                    }
+                },
+                toggleSugar: {
+                    value: function () {
+                        this.withSugar = !this.withSugar;
+                    }
+                },
+                toString: {
+                    value: function () {
+                        var hasSugarStr = this.withSugar ? "" : '[NO SUGAR] ';
+                        return hasSugarStr + Meal.prototype.toString.call(this);
+                    }
+                }
+            });
+
+            return Dessert;
+        }());
+
+        var MainCourse = (function () {
+            function MainCourse(name, price, calories, quantity, timeToPrepare, isVegan, type) {
+                Meal.call(this, name, price, calories, quantity, timeToPrepare, isVegan);
+                this.type = type;
+            }
+
+            MainCourse.prototype = Object.create(Meal.prototype);
+            MainCourse.prototype.constructor = this;
+
+            Object.defineProperties(MainCourse.prototype, {
+                type: {
+                    get: function () {
+                        return this._type;
+                    },
+                    set: function (value) {
+                        // TODO: validate type
+                        this._type = value;
+                    }
+                },
+                toString: {
+                    value: function () {
+                        var mealStr = Meal.prototype.toString.call(this);
+                        return mealStr + '\nType: {0}'.format(this.type);
+                    }
+                }
+            });
+
+            return MainCourse;
+        }());
+
+        var Salad = (function () {
+            function Salad(name, price, calories, quantity, timeToPrepare, containsPasta) {
+                Meal.call(this, name, price, calories, quantity, timeToPrepare, true);
+                this.containsPasta = containsPasta;
+            }
+
+            Salad.prototype = Object.create(Meal.prototype);
+            Salad.prototype.constructor = this;
+
+            Object.defineProperties(Salad.prototype, {
+                containsPasta: {
+                    get: function () {
+                        return this._containsPasta;
+                    },
+                    set: function (value) {
+                        this._containsPasta = value;
+                    }
+                },
+                toString: {
+                    value: function () {
+                        var mealStr = Meal.prototype.toString.call(this);
+                        return mealStr + '\nContains pasta: {0}'.format(this.containsPasta ? 'yes' : 'no');
+                    }
+                }
+            });
+
+            return Salad;
+        }());
 
         var Command = (function () {
 
@@ -191,7 +490,7 @@ function processRestaurantManagerCommands(commands) {
                         });
                     self._params[split[0]] = split[1];
                 });
-            }
+            };
 
             return Command;
         }());
@@ -368,7 +667,11 @@ function processRestaurantManagerCommands(commands) {
     commands.forEach(function (cmd) {
         if (cmd != "") {
             try {
+                if (results[results.length - 1] != '\n') {
+                    results += '\n';
+                }
                 var cmdResult = RestaurantEngine.executeCommand(cmd);
+
                 results += cmdResult;
             } catch (err) {
                 results += err.message + "\n";
