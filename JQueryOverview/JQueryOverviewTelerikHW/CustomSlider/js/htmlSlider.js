@@ -1,8 +1,10 @@
-define(['/libs/jquery-2.1.1.min', 'slide'], function ($, Slide) {
+define(['jquery', 'slide'], function ($, Slide) {
     var HtmlSlider = (function () {
-        function HtmlSlider(parent, slides) {
+        function HtmlSlider(parent, slides, prevSlideButton, nextSlideButton) {
             this.parent = parent;
             this.slides = slides;
+            this.prevSlideButton = prevSlideButton;
+            this.nextSlideButton = nextSlideButton;
         }
 
         Object.defineProperties(HtmlSlider.prototype, {
@@ -51,6 +53,14 @@ define(['/libs/jquery-2.1.1.min', 'slide'], function ($, Slide) {
                 value: function (slide) {
                     var index = this.slides.indexOf(slide);
                     this.slides.splice(index, 1);
+                }
+            },
+            appendToParent: {
+                value: function () {
+                    var self = this;
+                    $.each(this.slides, function (index, slide) {
+                        slide.appendTo(self.parent);
+                    });
                 }
             }
         });

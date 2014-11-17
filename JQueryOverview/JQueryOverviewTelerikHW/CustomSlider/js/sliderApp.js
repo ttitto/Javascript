@@ -1,14 +1,29 @@
 (function () {
-    "use strict";
-    require(['/libs/jquery-2.1.1.min', 'slide', 'htmlSlider'],
+    require.config({
+        paths: {
+            "jquery": "../libs/jquery-2.1.1.min"
+        }
+    });
+
+    require(['jquery', 'slide', 'htmlSlider'],
         function ($, Slide, HtmlSlider) {
-            var $slide1 = $('<div />'),
-                sliderContainer = $('#slider-container'),
-                htmlSlider;
+            var sliderContainer = $('#slider-container'),
+                htmlSlider,
+                $slide1,
+                $slide2;
 
-            $slide1.addClass('slide');
-            htmlSlider = new HtmlSlider(sliderContainer, [$slide1]);
+            htmlSlider = new HtmlSlider(sliderContainer, []);
 
+            $slide1 = $('<div />')
+                .addClass('slide')
+                .addClass('visible');
+
+            $slide2 = $('<div />')
+                .addClass('slide');
+
+            htmlSlider.addSlide($slide1);
+            htmlSlider.addSlide($slide2);
+            htmlSlider.appendToParent();
         }
     );
-});
+}());
