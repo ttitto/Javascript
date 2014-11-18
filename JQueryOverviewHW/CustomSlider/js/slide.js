@@ -1,6 +1,6 @@
 define([], function () {
     var Slide = (function () {
-        function Slide(inner) {
+        function Slide(innerHtml) {
             this.innerHtml = innerHtml;
         }
 

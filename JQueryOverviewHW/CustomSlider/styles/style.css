@@ -1,0 +1,224 @@
+html, body, input, h1, h2, p, a {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Tahoma;
+    font-size: 12px;
+}
+
+/*slider container*/
+div#slider-container {
+    margin: 0 auto;
+    width: 70%;
+    height: 600px;
+    position: relative;
+}
+
+.slider-button {
+    width: 30px;
+    position: absolute;
+    top: 200px;
+}
+
+.next {
+    right: -30px;
+}
+
+.previous {
+    left: -30px;
+}
+
+.slide {
+    /*position: absolute;*/
+    display: none;
+    margin: 0 auto;
+}
+
+.visible {
+    display: block;
+}
+
+/*slide1*/
+div#slide2 div {
+    border: solid black 3px;
+    border-radius: 500px;
+}
+
+/*HEAD DIV*/
+#head {
+    width: 500px;
+    height: 500px;
+    margin-top: 4px;
+    margin-left: 8px;
+    background-color: yellow;
+    position: relative;
+}
+
+#nose {
+    background: red;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 199px;
+    left: 199px;
+}
+
+#left-eye {
+    background: white;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 89px;
+    left: 89px;
+}
+
+#right-eye {
+    background: white;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 89px;
+    left: 289px;
+}
+
+#right-iris {
+    background: black;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+}
+
+#left-iris {
+    background: black;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+#mouth {
+    background: white;
+    width: 250px;
+    height: 100px;
+    position: absolute;
+    top: 299px;
+    left: 114px;
+}
+
+#left-tooth {
+    width: 50px;
+    height: 50px;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    top: -3px;
+    left: 72px;
+}
+
+#right-tooth {
+    width: 50px;
+    height: 50px;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    top: -3px;
+    left: 122px;
+}
+
+/*slide2*/
+
+#wrapper {
+    background-color: #EEE;
+    height: 400px;
+    width: 765px;
+    padding: 10px 20px 25px 14px;
+}
+
+#wrapper p {
+    margin: 21px -1px;
+    font-size: 1.2em;
+}
+
+#wrapper h1 {
+    color: #234465;
+}
+
+fieldset {
+    border: none;
+    margin: 7px 7px;
+}
+
+fieldset h2 {
+    font-size: 1.4em;
+    margin-bottom: 9px;
+}
+
+fieldset h2 span {
+    color: #234465;
+}
+
+fieldset.left input[type="button"] {
+    width: 169px;
+    height: 39px;
+    border: #234465 solid 2px;
+    font-size: 1.4em;
+    color: #234465;
+    font-weight: bold;
+    background-color: #EEE;
+}
+
+fieldset.blue {
+    background-color: #234465;
+    color: white;
+    padding: 15px;
+    margin-left: -4px;
+    height: 264px;
+}
+
+fieldset.blue label {
+    margin-left: 5px;
+}
+
+fieldset.blue div.right {
+    text-align: center;
+}
+
+fieldset.blue input[type="button"] {
+    width: 139px;
+    height: 39px;
+    margin-bottom: 10px;
+    border: #FF9C00 solid 2px;
+    background-color: #234465;
+    color: white;
+}
+
+fieldset.blue a {
+    color: white;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+input {
+    display: block;
+}
+
+input[type="text"], input[type="password"] {
+    width: 317px;
+    height: 37px;
+    margin-left: -1px;
+    margin-bottom: 14px;
+    padding: 0 9px;
+    font-size: 1.2em;
+}
+
+/*slide3*/
+#slide3 img {
+    height: 500px;
+}

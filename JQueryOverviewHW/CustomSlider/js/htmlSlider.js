@@ -44,6 +44,15 @@ define(['jquery', 'slide'], function ($, Slide) {
                     this._prevSlideButton = value;
                 }
             },
+            currentSlideIndex: {
+                get: function () {
+                    return this.indexOf($('.slide.visible'));
+                },
+                set: function (value) {
+                    // TODO: validate currentSlide
+                    this._currentSlideIndex = value;
+                }
+            },
             addSlide: {
                 value: function (slide) {
                     this.slides.push(slide);
