@@ -112,6 +112,10 @@
                 );
 
             });
+
+            window.setInterval(function(){
+                htmlSlider.nextSlideButton.click();
+            }, 5000);
         }
     );
 }());
