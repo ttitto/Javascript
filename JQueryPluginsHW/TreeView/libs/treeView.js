@@ -1,19 +1,14 @@
 (function ($) {
-    $.fn.treeView = function (options) {
-        var settings = {};
-        $.extend(settings, this.treeView.defaults, options);
-        console.dir(settings['imageUrl']);
-//        $('.treeView-item').css('background-color', 'red');
-        $('.treeView-item:before').css('background-image', 'url(' + settings['imageUrl'] + ')');
-        console.dir('url(\"' + settings['imageUrl'] + '\")');
-        return this;
-    }
+    $.fn.treeView = function () {
+        $(this).click(function (e) {
+            $(e.target).children().toggleClass('visible');
+            e.stopPropagation();
+        });
 
-    $.fn.treeView.defaults = {
-        imageUrl: 'imgs/btn.jpg'
+        return this;
     }
 })(jQuery);
 
-$(function(){
-    $().treeView();
+$(function () {
+    $('.treeView').treeView();
 });
