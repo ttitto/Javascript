@@ -52,8 +52,7 @@ $(function () {
             $.ajax({
                 url: 'https://api.parse.com/1/classes/Country',
                 type: 'POST',
-                dataType: 'json',
-                contentType:'application/json',
+                contentType: 'application/json',
                 data: JSON.stringify({"name": input.value}),
                 headers: headers,
                 success: function () {
@@ -64,8 +63,41 @@ $(function () {
                 }
             });
             input.remove();
+            loadCountries();
         } else {
             $('<input type="text" />').addClass('country-input').prependTo($(this).parent());
+        }
+    });
+
+    $('#town-add-btn').click(function () {
+        var input = $('.town-input')[0],
+            selectedCountryId = '';
+        if (input) {
+            selectedCountryId = getSelectedCountry()[0].objectId;
+            $.ajax({
+                url: 'https://api.parse.com/1/classes/Town',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'name': input.value,
+                    'country': {
+                        "__type": "Pointer",
+                        "className": "Country",
+                        "objectId":selectedCountryId
+                    }
+                }),
+                headers: headers,
+                success: function () {
+                    successMessage("New town successfully added");
+                },
+                error: function (err) {
+                    errorMessage(err.responseText, 'Error occurred while adding new town');
+                }
+            });
+            input.remove();
+            loadTowns(selectedCountryId);
+        } else {
+            $('<input type="text" />').addClass('town-input').prependTo($(this).parent());
         }
     });
 
