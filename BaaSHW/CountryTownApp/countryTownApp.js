@@ -4,6 +4,7 @@ $(function () {
             'X-Parse-REST-API-Key': 'NzZlkbo49SUb8m3RkJ4bVyOXXRVnkFYoRQ0j74Nc'
         },
         countries = [],
+        towns = [],
         errorMessage = function (err, message) {
             var errorsDiv = $('<div />');
             errorsDiv.addClass('errors-container').html(message + ': ' + err).appendTo(document.body).fadeOut(4000);
@@ -40,6 +41,49 @@ $(function () {
                     errorMessage(err.responseText, "Error occurred when loading countries");
                 }
             });
+        },
+
+        loadTowns = function (countryId) {
+            $.ajax({
+                url: 'https://api.parse.com/1/classes/Town',
+                type: 'GET',
+                headers: headers,
+                success: function (data) {
+                    towns = data.results;
+                    var selectedTowns = towns.filter(function (country) {
+                            return country['country'].objectId == countryId;
+                        }),
+                        townsList = $('#towns-list');
+
+                    townsList.html('');
+                    $.each(selectedTowns, function (index, town) {
+                        $('<option />').addClass('town-item').html(town.name).appendTo(townsList);
+                    });
+                },
+                error: function (err) {
+                    errorMessage(err, 'Error occured when loading towns');
+                }
+            });
+        },
+
+        getSelectedCountry = function () {
+            var countryName = $('#countries-list').children(':selected').val();
+            return countries.filter(function (country) {
+                return countryName == country.name;
+            });
+        },
+        getSelectedTowns = function () {
+            var townsOptions = $('#towns-list').children(':selected'),
+                selectedTowns = [];
+
+            $(towns).each(function (index, town) {
+                $.each(townsOptions, function (index, townOption) {
+                    if (town.name == townOption.value) {
+                        selectedTowns.push(town);
+                    }
+                });
+            });
+            return selectedTowns;
         };
 
     $('#countries-list').change(function () {
@@ -83,7 +127,7 @@ $(function () {
                     'country': {
                         "__type": "Pointer",
                         "className": "Country",
-                        "objectId":selectedCountryId
+                        "objectId": selectedCountryId
                     }
                 }),
                 headers: headers,
@@ -101,34 +145,44 @@ $(function () {
         }
     });
 
-    function getSelectedCountry() {
-        var countryName = $('#countries-list').children(':selected').text();
-        return countries.filter(function (country) {
-            return countryName == country.name;
-        });
-    }
-
-    function loadTowns(countryId) {
+    $('#country-del-btn').click(function () {
+        var countryId = getSelectedCountry()[0].objectId;
         $.ajax({
-            url: 'https://api.parse.com/1/classes/Town',
-            type: 'GET',
+            url: 'https://api.parse.com/1/classes/Country/' + countryId,
+            type: 'DELETE',
             headers: headers,
-            success: function (data) {
-                var towns = data.results.filter(function (country) {
-                        return country['country'].objectId == countryId;
-                    }),
-                    townsList = $('#towns-list');
-
-                townsList.html('');
-                $.each(towns, function (index, town) {
-                    $('<option />').addClass('town-item').html(town.name).appendTo(townsList);
-                });
+            success: function () {
+                successMessage("Country successfully deleted!");
+                loadCountries();
             },
             error: function (err) {
-                errorMessage(err, 'Error occured when loading towns');
+                errorMessage(err, "Error occurred while trying to delete country!");
             }
         });
-    }
+    });
+
+    $('#town-del-btn').click(function () {
+        var selectedTowns = getSelectedTowns();
+        if (selectedTowns.length > 0) {
+            $(selectedTowns).each(function (index, town) {
+                $.ajax({
+                    url: 'https://api.parse.com/1/classes/Town/'+town.objectId,
+                    headers: headers,
+                    type: 'DELETE',
+                    success: function (data) {
+                        successMessage('Selected towns successfully deleted');
+                        loadTowns(getSelectedCountry()[0].objectId);
+                    },
+                    error: function (err) {
+                        errorMessage(err, 'Error occurred while trying to delete selected towns');
+                    }
+                });
+            });
+
+        }
+    });
+
 
     loadCountries();
-});
+})
+;
