@@ -94,11 +94,15 @@ $(function () {
     $('#country-add-btn').click(function () {
         var input = $('.country-input')[0];
         if (input) {
+            if (input.value.length < 3) {
+                return false;
+            }
+
             $.ajax({
                 url: 'https://api.parse.com/1/classes/Country',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({"name": input.value}),
+                data: JSON.stringify({"name": encodeURI(input.value)}),
                 headers: headers,
                 success: function () {
                     successMessage("New country successfully added");
@@ -118,13 +122,17 @@ $(function () {
         var input = $('.town-input')[0],
             selectedCountryId = '';
         if (input) {
+            if (input.value.length < 3) {
+                return false;
+            }
+
             selectedCountryId = getSelectedCountry()[0].objectId;
             $.ajax({
                 url: 'https://api.parse.com/1/classes/Town',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    'name': input.value,
+                    'name': encodeURI(input.value),
                     'country': {
                         "__type": "Pointer",
                         "className": "Country",
@@ -188,13 +196,16 @@ $(function () {
             input = $('.country-edit-input')[0];
 
         if (input) {
-            // TODO: validate country edit input
+            if (input.value.length < 3) {
+                return false;
+            }
+
             $.ajax({
                 url: 'https://api.parse.com/1/classes/Country/' + selectedCountry[0].objectId,
                 type: 'PUT',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    'name': input.value
+                    'name': encodeURI(input.value)
                 }),
                 headers: headers,
                 success: function () {
@@ -223,13 +234,17 @@ $(function () {
         }
 
         if (input) {
+            if (input.value.length < 3) {
+                return false;
+            }
+
             selectedCountryId = getSelectedCountry()[0].objectId;
             $.ajax({
                 url: 'https://api.parse.com/1/classes/Town/' + selectedTowns[0].objectId,
                 type: 'PUT',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    'name': input.value
+                    'name': encodeURI(input.value)
                 }),
                 headers: headers,
                 success: function () {
@@ -240,6 +255,7 @@ $(function () {
                     errorMessage(err.responseText, 'Error occurred while editing new town');
                 }
             });
+
             input.remove();
         } else {
             $('<input type="text" />').addClass('town-edit-input').val(selectedTowns[0].name).appendTo($(this).parent());
