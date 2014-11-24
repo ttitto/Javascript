@@ -72,6 +72,7 @@ $(function () {
                 return countryName == country.name;
             });
         },
+
         getSelectedTowns = function () {
             var townsOptions = $('#towns-list').children(':selected'),
                 selectedTowns = [];
@@ -166,10 +167,10 @@ $(function () {
         if (selectedTowns.length > 0) {
             $(selectedTowns).each(function (index, town) {
                 $.ajax({
-                    url: 'https://api.parse.com/1/classes/Town/'+town.objectId,
+                    url: 'https://api.parse.com/1/classes/Town/' + town.objectId,
                     headers: headers,
                     type: 'DELETE',
-                    success: function (data) {
+                    success: function () {
                         successMessage('Selected towns successfully deleted');
                         loadTowns(getSelectedCountry()[0].objectId);
                     },
@@ -182,6 +183,68 @@ $(function () {
         }
     });
 
+    $('#country-edit-btn').click(function () {
+        var selectedCountry = getSelectedCountry(),
+            input = $('.country-edit-input')[0];
+
+        if (input) {
+            // TODO: validate country edit input
+            $.ajax({
+                url: 'https://api.parse.com/1/classes/Country/' + selectedCountry[0].objectId,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'name': input.value
+                }),
+                headers: headers,
+                success: function () {
+                    successMessage('Country edited successfuly');
+                    loadCountries();
+                },
+                error: function (err) {
+                    errorMessage(err.responseText, 'Error occured while editing country');
+                }
+            });
+
+            input.remove();
+        } else {
+            $('<input type="text" />').addClass('country-edit-input').val(selectedCountry[0].name).appendTo($(this).parent());
+        }
+    });
+
+    $('#town-edit-btn').click(function () {
+        var selectedTowns = getSelectedTowns(),
+            input = $('.town-edit-input')[0],
+            selectedCountryId = '';
+
+        if (selectedTowns.length !== 1) {
+            errorMessage('', 'Please select just one town to edit!');
+            return false;
+        }
+
+        if (input) {
+            selectedCountryId = getSelectedCountry()[0].objectId;
+            $.ajax({
+                url: 'https://api.parse.com/1/classes/Town/' + selectedTowns[0].objectId,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'name': input.value
+                }),
+                headers: headers,
+                success: function () {
+                    successMessage("Town successfully edited");
+                    loadTowns(selectedCountryId);
+                },
+                error: function (err) {
+                    errorMessage(err.responseText, 'Error occurred while editing new town');
+                }
+            });
+            input.remove();
+        } else {
+            $('<input type="text" />').addClass('town-edit-input').val(selectedTowns[0].name).appendTo($(this).parent());
+        }
+    });
 
     loadCountries();
 })
