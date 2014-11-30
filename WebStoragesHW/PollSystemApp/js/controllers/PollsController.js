@@ -3,7 +3,6 @@ var PollSystemApp = PollSystemApp || {};
 PollSystemApp.PollsController = (function () {
     function PollsController(dataPersister, headers) {
         PollSystemApp.Controller.call(this, dataPersister, headers);
-        // TODO: constructor
     }
 
     PollsController.prototype = Object.create(PollSystemApp.Controller.prototype);
@@ -19,12 +18,13 @@ PollSystemApp.PollsController = (function () {
         });
     }
 
-    PollsController.prototype.loadActive = function (selector) {
+    PollsController.prototype.loadActive = function (selector, callback) {
         var _this = this;
 
         this.persister.polls.getActive(
             function (data) {
                 attachPollToDom(selector, data.results);
+                callback();
             },
             function (err) {
                 console.log(err);

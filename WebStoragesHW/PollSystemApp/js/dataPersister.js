@@ -31,12 +31,12 @@ PollSystemApp.dataPersister = (function () {
         }
 
         Questions.prototype.getAll = function (success, error, headers) {
-            ajaxRequester(this.questionsUrl, success, error, headers);
+            ajaxRequester.get(this.questionsUrl, success, error, headers);
         };
 
         Questions.prototype.getRelatedToPoll = function (pollId, success, error, headers) {
-            var url = this.questionsUrl + pollId;
-            ajaxRequester(url, success, error, headers);
+            var url = this.questionsUrl + '?where={"pollId":{"__type":"Pointer","className":"Poll","objectId":"' + pollId + '"}}';
+            ajaxRequester.get(url, success, error, headers);
         };
 
         return Questions;
@@ -47,12 +47,9 @@ PollSystemApp.dataPersister = (function () {
             this.answersUrl = baseUrl + "Answer/";
         }
 
-        Answers.prototype.getAll = function (success, error, headers) {
-            ajaxRequester(this.answersUrl, success, error, headers);
-        };
-
-        Answers.prototype.getRelatedToPoll = function(pollId, success, error, headers){
-
+        Answers.prototype.getAllWithQuestions = function (success, error, headers) {
+            var answersWithQuestionsUrl = this.answersUrl + '?include=questionId' + '&keys=content,objectId,questionId';
+            ajaxRequester.get(answersWithQuestionsUrl, success, error, headers);
         };
 
         return Answers;

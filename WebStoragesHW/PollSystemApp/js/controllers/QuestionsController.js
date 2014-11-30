@@ -12,12 +12,13 @@ PollSystemApp.QuestionsController = (function () {
         console.dir(data);
     }
 
-    QuestionsController.prototype.load = function (selector, pollId) {
+    QuestionsController.prototype.loadRelatedToPoll = function (selector, pollId, callback) {
         var _this = this;
         this.persister.questions.getRelatedToPoll(
             pollId,
             function (data) {
-                attachQuestionsToDom(selector, data.results);
+               // attachQuestionsToDom(selector, data.results);
+                callback(data.results);
             },
             function (err) {
 
