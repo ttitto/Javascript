@@ -22,5 +22,20 @@ PollSystemApp.AnswersController = (function () {
         )
     };
 
+    AnswersController.prototype.getByIdWithQuestion = function (answerId, callback) {
+        var _this = this;
+
+        this.persister.answers.getByIdWithQuestions(
+            function (data) {
+                callback(data);
+            },
+            function (err) {
+                console.log(err);
+            },
+            _this.getHeaders(),
+            answerId
+        )
+    };
+
     return AnswersController;
 }());

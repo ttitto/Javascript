@@ -8,7 +8,8 @@
         pollController = new PollSystemApp.PollsController(dataPersister, headers),
         questionsController = new PollSystemApp.QuestionsController(dataPersister, headers),
         answersController = new PollSystemApp.AnswersController(dataPersister, headers),
-        questions = [];
+        questions = [],
+        data;
 
     pollController.loadActive('#polls-list', attachPollsEvents);
 
@@ -19,32 +20,33 @@
                 answersData,
                 timer,
                 newTimer;
+            $('#questions-area').html('');
+            if (localStorage.timer) {
+                timer = JSON.parse(localStorage.timer);
+                newTimer = new PollSystemApp.Timer(5 * 60);
+
+                if (!timer) {
+                    timer = new PollSystemApp.Timer(5 * 60);
+                    timer.start();
+                }
+
+                $.extend(newTimer, timer);
+                timer = newTimer;
+
+                var parsedEndTime = Date.parse(timer.endTime);
+                var parsedCurrentTime = Date.parse(new Date().toString());
+                timer.timeout = (parsedEndTime - parsedCurrentTime) / (1000);
+                console.dir(timer);
+            }
 
             if (localStorage.answers) {
                 answersData = JSON.parse(localStorage.answers);
-                if (localStorage.timer) {
-                    timer = JSON.parse(localStorage.timer);
-                    newTimer = new PollSystemApp.Timer(5 * 60);
 
-                    if (!timer) {
-                        timer = new PollSystemApp.Timer(5 * 60);
-                        timer.start();
-                    }
-
-                    $.extend(newTimer, timer);
-                    timer = newTimer;
-
-                    var parsedEndTime = Date.parse(timer.endTime);
-
-
-                } else {
-                    throw  new Error('Timer should be stored in localstorage together with answers');
-                }
                 if (parsedEndTime < new Date()) {
                     // The time has ended while the page was closed
 
                     // TODO: implement evaluate
-                    evaluateResults(answersData);
+                    evaluateResults(answersData, thisId);
                 } else {
                     loadAnswers(answersData, thisId, timer);
                 }
@@ -79,7 +81,13 @@
                 questionContainer.append(answersContainer);
             }
 
-            var answerInput = $('<input type="radio" name="' + questId + '" id="' + answId + '" data-id="' + answId + '"/>');
+            var answerInput = $('<input type="radio" name="' + questId + '" id="' + answId + '" data-id="' + answId + '"/>')
+                .addClass('answer-radio');
+            if (answer.checked) {
+                if (answer.checked == 'checked') {
+                    answerInput.prop("checked", true);
+                }
+            }
             var answerLabel = $('<label for="' + answId + '">' + answer.content + '</label>');
             answersContainer.append(answerInput).append(answerLabel).append('<br />');
         });
@@ -87,13 +95,43 @@
         $.each(questions, function (index) {
             questionsArea.append(questions[index]);
         });
-
+        onRadioButtonChange(data);
         loadSubmitButton(questionsArea);
+        onSubmitButtonClick(data, pollId);
         timerInitialize(timer, data);
     }
 
     function loadSubmitButton(parent) {
         $('<input type="button" id="submit-btn" value="Submit" />').appendTo(parent);
+    }
+
+    function onRadioButtonChange(data) {
+        $('.answer-radio').on('change', function () {
+            var answerId = $(this).attr('data-id'),
+                questId = $(this).attr('name');
+            var answersForQuestionId = $('[name=' + questId + ']');
+            var objAnswer;
+            $.each(data, function (index, answer) {
+                if (answer.questionId.objectId == questId) {
+                    if (answer.objectId == answerId) {
+                        objAnswer = answer;
+                        answer.checked = 'checked';
+                    } else {
+                        answer.checked = '';
+                    }
+                }
+            });
+
+            $(this).prop("checked", true);
+
+            localStorage.setItem('answers', JSON.stringify(data));
+        });
+    }
+
+    function onSubmitButtonClick(data, pollId) {
+        $('#submit-btn').on('click', function () {
+            evaluateResults(data, pollId);
+        });
     }
 
     function timerInitialize(timer, data) {
@@ -105,7 +143,7 @@
         timer.onTick(function () {
             loadTimer(timer);
             localStorage.setItem('timer', JSON.stringify(timer));
-            localStorage.setItem('answers', JSON.stringify(data));
+//            localStorage.setItem('answers', JSON.stringify(data));
         });
 
         return timer;
@@ -115,8 +153,43 @@
         $('#timer').html(timer.toString());
     }
 
-    function evaluateResults(data) {
+    function evaluateResults(data, pollId) {
         console.log('evaluate results');
+        var wrongAnswers = [],
+            questions = [],
+            correctAnswersCount = 0,
+            totalQuestionsCount,
+            outputStr = '';
+        questionsController.loadRelatedToPoll(pollId, function (questionsData) {
+            totalQuestionsCount = questionsData.length;
+
+            $.each(data, function (index, answer) {
+                if (answer.checked == 'checked') {
+                    answersController.getByIdWithQuestion(answer.objectId, function (answ) {
+                        if (answ.isCorrect == false) {
+                            wrongAnswers.push(answ.questionId.content + ' => ' + answ.content);
+                        } else {
+                            correctAnswersCount++;
+                        }
+
+                        outputStr = 'Your results will be lost if you do not save it now!<br/>';
+                        outputStr += 'You have ' + correctAnswersCount + ' correct answers.<br/>';
+                        outputStr += 'Your result is: ' + (100 * correctAnswersCount / totalQuestionsCount).toFixed(2) + '%<br/>';
+                        outputStr += 'Your wrong answers are:<br/>';
+                        $.each($(wrongAnswers), function (key, value) {
+                            outputStr += value + '<br/>';
+                        });
+                        $('#results').html(outputStr);
+                    });
+                }
+            });
+
+
+        });
+
+
+        localStorage.removeItem('answers');
+        localStorage.removeItem('timer');
     }
 
 }());

@@ -12,7 +12,7 @@ PollSystemApp.QuestionsController = (function () {
         console.dir(data);
     }
 
-    QuestionsController.prototype.loadRelatedToPoll = function (selector, pollId, callback) {
+    QuestionsController.prototype.loadRelatedToPoll = function ( pollId, callback) {
         var _this = this;
         this.persister.questions.getRelatedToPoll(
             pollId,

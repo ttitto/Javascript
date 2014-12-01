@@ -52,6 +52,11 @@ PollSystemApp.dataPersister = (function () {
             ajaxRequester.get(answersWithQuestionsUrl, success, error, headers);
         };
 
+        Answers.prototype.getByIdWithQuestions = function (success, error, headers, answerId) {
+            var answerWithIdUrl = this.answersUrl + answerId + '?include=questionId';
+            ajaxRequester.get(answerWithIdUrl, success, error, headers);
+        };
+
         return Answers;
     }());
 
