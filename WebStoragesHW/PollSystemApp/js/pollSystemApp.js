@@ -15,14 +15,48 @@
     function attachPollsEvents() {
         $('.poll').on('click', function (e) {
             e.preventDefault();
-            var thisId = $(this).attr('data-id');
-            answersController.load('#', function (data, pollId) {
-                loadAnswers(data, thisId);
-            });
+            var thisId = $(this).attr('data-id'),
+                answersData,
+                timer,
+                newTimer;
+
+            if (localStorage.answers) {
+                answersData = JSON.parse(localStorage.answers);
+                if (localStorage.timer) {
+                    timer = JSON.parse(localStorage.timer);
+                    newTimer = new PollSystemApp.Timer(5 * 60);
+
+                    if (!timer) {
+                        timer = new PollSystemApp.Timer(5 * 60);
+                        timer.start();
+                    }
+
+                    $.extend(newTimer, timer);
+                    timer = newTimer;
+
+                    var parsedEndTime = Date.parse(timer.endTime);
+
+
+                } else {
+                    throw  new Error('Timer should be stored in localstorage together with answers');
+                }
+                if (parsedEndTime < new Date()) {
+                    // The time has ended while the page was closed
+
+                    // TODO: implement evaluate
+                    evaluateResults(answersData);
+                } else {
+                    loadAnswers(answersData, thisId, timer);
+                }
+            } else {
+                answersController.load('#', function (data, pollId) {
+                    loadAnswers(data, thisId, timer);
+                });
+            }
         });
     }
 
-    function loadAnswers(data, pollId) {
+    function loadAnswers(data, pollId, timer) {
         var questionsArea = $('#questions-area')
         questions = {};
 
@@ -54,12 +88,37 @@
             questionsArea.append(questions[index]);
         });
 
-        var timer = new PollSystemApp.Timer(5*60);
-        timer.start();
-        timer.onTick(function(){
-            console.log(new Date());
-        });
+        loadSubmitButton(questionsArea);
+        timerInitialize(timer, data);
     }
+
+    function loadSubmitButton(parent) {
+        $('<input type="button" id="submit-btn" value="Submit" />').appendTo(parent);
+    }
+
+    function timerInitialize(timer, data) {
+        if (!timer) {
+            timer = new PollSystemApp.Timer(5 * 60);
+            timer.start();
+        }
+
+        timer.onTick(function () {
+            loadTimer(timer);
+            localStorage.setItem('timer', JSON.stringify(timer));
+            localStorage.setItem('answers', JSON.stringify(data));
+        });
+
+        return timer;
+    }
+
+    function loadTimer(timer) {
+        $('#timer').html(timer.toString());
+    }
+
+    function evaluateResults(data) {
+        console.log('evaluate results');
+    }
+
 }());
 
 
