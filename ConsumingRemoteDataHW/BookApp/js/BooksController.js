@@ -13,17 +13,22 @@ var BooksController = (function () {
     };
 
     BooksController.prototype.getAll = function () {
-        var _this = this;
+        var _this = this,
+            d = $.Deferred();
 
         this.persister.books.getAll(
             function (data) {
-                console.dir(data);
+                d.resolve(data);
+//                console.dir(data);
             },
             function (err) {
                 console.log(err);
+                d.reject();
             },
             _this.getHeaders()
         );
+
+        return d.promise();
     };
 
     return BooksController;

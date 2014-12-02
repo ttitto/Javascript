@@ -10,16 +10,11 @@ var dataPersister = (function () {
         }
 
         Books.prototype.getAll = function (success, error, headers) {
-            ajaxRequester.get(
-                this.baseUrl,
-                success,
-                error,
-                headers
-            );
+            return  ajaxRequester.get(this.baseUrl, success, error, headers);
         };
 
         return Books;
-    });
+    }());
 
     return{
         get: function (baseUrl) {
