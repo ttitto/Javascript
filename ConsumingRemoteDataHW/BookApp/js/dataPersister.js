@@ -24,7 +24,7 @@ var dataPersister = (function () {
         };
 
         Books.prototype.add = function (bookData, success, error, headers) {
-            return ajaxRequester.post(this.baseUrl, success, error, headers, false, false, JSON.stringify(bookData));
+            return ajaxRequester.post(this.baseUrl, success, error, headers, false, false, bookData);
         };
 
         return Books;

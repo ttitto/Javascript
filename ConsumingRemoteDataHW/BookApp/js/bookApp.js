@@ -22,12 +22,12 @@
             return d.promise();
         })
         .then(function (data) {
-            console.log('second promise');
             onAddBookButtonClick();
             onEditBookButtonClick();
             onDeleteBookButtonClick();
         })
         .done();
+
 
     function attachBookToDom(book, parentEl) {
         $('<div data-id="' + book.objectId + '"></div>').addClass('book')
@@ -42,32 +42,35 @@
             .appendTo(parentEl);
     }
 
-    function attachBookFormToDom(bookId, parentEl, legend, bookTitle, bookAuthor, bookIsbn, bookTags, btnText) {
+    function attachBookFormToDom(bookId, parentEl, legend, bookTitle, bookAuthor, bookIsbn, bookTags, btnId, btnText) {
         parentEl.html('');
         $('<fieldset data-id="' + bookId + '"><legend>' + legend + '</legend></fieldset>')
             .append($('<label>Title<input type="text" id="title-input" value="' + bookTitle + '"></label>'))
             .append($('<label>Author<input type="text" id="author-input" value="' + bookAuthor + '"></label>'))
             .append($('<label>ISBN<input type="text" id="isbn-input" value="' + bookIsbn + '"></label>'))
             .append($('<label>Tags<input type="text" id="tags-input" value="' + bookTags + '"></label>'))
-            .append($('<input type="button" id="book-add-btn" value="' + btnText + '">'))
+            .append($('<input type="button" id="' + btnId + '" value="' + btnText + '">'))
             .appendTo(parentEl);
 
+        $('#book-add-btn').off('click');
         onSubmitAdditionButtonClick();
     }
 
     function onAddBookButtonClick() {
         var parentEl = $('#book-form');
-        $('.book-add-btn').on('click', function () {
-            attachBookFormToDom(null, parentEl, 'Add new book', '', '', '', '', 'Add');
+        $('#books-area').on('click', '.book-add-btn', function (ev) {
+            ev.stopPropagation();
+            attachBookFormToDom(null, parentEl, 'Add new book', '', '', '', '', 'book-add-btn', 'Add');
         });
     }
 
     function onEditBookButtonClick() {
         var parentEl = $('#book-form');
-        $('.book-edit-btn').on('click', function () {
+        $('#books-area').on('click', '.book-edit-btn', function (ev) {
+            ev.stopPropagation();
             booksController.getById($(this).attr('data-id'))
                 .then(function (data) {
-                    attachBookFormToDom(null, parentEl, 'Edit current book', '', '', '', '', 'Edit');
+                    attachBookFormToDom(null, parentEl, 'Edit current book', '', '', '', '', ' book-edit-btn', 'Edit');
                     $('#title-input').val(data.title);
                     $('#author-input').val(data.author);
                     $('#isbn-input').val(data.isbn);
@@ -78,7 +81,8 @@
     }
 
     function onDeleteBookButtonClick() {
-        $('.book-del-btn').on('click', function () {
+        $('#books-area').on('click', '.book-del-btn', function (ev) {
+            ev.stopPropagation();
             var bookId = $(this).attr('data-id');
             booksController.deleteById(bookId)
                 .then(function (data) {
@@ -89,7 +93,8 @@
     }
 
     function onSubmitAdditionButtonClick() {
-        $('#book-add-btn').on('click', function () {
+        $('#book-form').on('click', '#book-add-btn', function (ev) {
+            ev.stopPropagation();
             var bookData = {
 //                objectId: data,
                 title: $('#title-input').val(),
@@ -99,9 +104,8 @@
             };
             booksController.add(bookData)
                 .then(function (data, bookData) {
-                    console.dir(data);
-                    //$.extend(bookData, data);
-                     attachBookToDom(bookData, $('#books-area'));
+                    $.extend(bookData, data);
+                    attachBookToDom(bookData, $('#books-area'));
                 })
                 .done();
         });

@@ -32,7 +32,7 @@ var ajaxRequester = (function () {
         return makeRequest(url, 'PUT', success, error, headers, data, contentType, dataType);
     }
 
-    function makeDeleteRequest(url, success, error, headers, data, contentType, dataType) {
+    function makeDeleteRequest(url, success, error, headers, contentType, dataType) {
         contentType = contentType || 'application/json; charset=UTF-8';
         dataType = dataType || 'json';
 
