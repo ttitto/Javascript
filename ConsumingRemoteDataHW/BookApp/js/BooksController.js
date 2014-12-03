@@ -31,5 +31,58 @@ var BooksController = (function () {
         return d.promise();
     };
 
+    BooksController.prototype.getById = function (bookId) {
+        var _this = this,
+            d = $.Deferred();
+
+        this.persister.books.getById(bookId,
+            function (data) {
+                d.resolve(data);
+            },
+            function (err) {
+                d.reject(err);
+            },
+            _this.getHeaders()
+        );
+
+        return d.promise();
+    };
+
+    BooksController.prototype.deleteById = function (bookId) {
+        var _this = this,
+            d = $.Deferred();
+
+        this.persister.books.deleteById(
+            bookId,
+            function (data) {
+                d.resolve(data);
+            },
+            function (err) {
+                d.reject(err);
+            },
+            _this.getHeaders()
+        );
+
+        return d.promise();
+    };
+
+    BooksController.prototype.add = function (bookData) {
+        var _this = this,
+            d = $.Deferred();
+
+        this.persister.books.add(
+            bookData,
+            function (data) {
+                d.resolve(data, bookData);
+            },
+            function (err) {
+                d.reject(err);
+            },
+            _this.getHeaders()
+        );
+
+        return d.promise();
+    };
+
     return BooksController;
 }());
