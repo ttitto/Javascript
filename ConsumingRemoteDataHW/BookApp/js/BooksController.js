@@ -84,5 +84,24 @@ var BooksController = (function () {
         return d.promise();
     };
 
+    BooksController.prototype.edit = function(bookId, bookData){
+      var _this = this;
+        d = $.Deferred();
+
+        this.persister.books.edit(
+            bookId,
+            bookData,
+            function(data){
+                d.resolve(data);
+            },
+            function(err){
+                d.reject(err);
+            },
+            _this.getHeaders()
+        );
+
+        return d.promise();
+    };
+
     return BooksController;
 }());

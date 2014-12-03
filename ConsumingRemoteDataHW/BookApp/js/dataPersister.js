@@ -27,6 +27,11 @@ var dataPersister = (function () {
             return ajaxRequester.post(this.baseUrl, success, error, headers, false, false, bookData);
         };
 
+        Books.prototype.edit = function(bookId, bookData, success, error, headers) {
+            var concreteBookUrl = this.baseUrl + bookId;
+            return ajaxRequester.put(concreteBookUrl,success, error, headers, bookData);
+        };
+
         return Books;
     }());
 
