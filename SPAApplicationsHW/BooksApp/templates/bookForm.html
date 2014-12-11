@@ -1,0 +1,13 @@
+<form id="book-form" action="">
+    <label for="title-input">Title: <input type="text" id="title-input"/></label>
+    <label for="author-input">Author: <input type="text" id="author-input"/></label>
+    <label for="isbn-input">ISBN: <input type="text" id="isbn-input"/></label>
+    <label for="tags-select">Tags
+        <select name="tags-select" id="tags-select" multiple=multiple>
+            {{#tags}}
+            <option class="tag" value="{{tags.content}}">{{tags.content}}</option>
+            {{/tags}}
+        </select>
+        <input type="button" id="add-tag-btn" value="Add tag"/>
+    </label>
+</form>

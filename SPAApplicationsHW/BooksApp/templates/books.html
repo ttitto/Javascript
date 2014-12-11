@@ -1,0 +1,12 @@
+<ul id="books-list">
+    {{#books}}
+    <li class="book">
+        <div class="book-title">{{title}}</div>
+        <div class="book-author">{{author}}</div>
+        <div class="book-isbn">{{isbn}}</div>
+        <div class="book-tags">
+            <small>{{#tags}}, {{/tags}}</small>
+        </div>
+    </li>
+    {{/books}}
+</ul>

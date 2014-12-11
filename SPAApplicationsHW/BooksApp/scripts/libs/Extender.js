@@ -6,10 +6,10 @@ define([], function () {
 
         function init() {
             (function initObjectExtensions() {
-                Object.prototype.extends = function (parent) {
-                    this.prototype = Object.create(parent.prototype);
-                    this.prototype.constructor = this;
-                };
+//                Object.prototype.inherits = function (parent) {
+//                    this.prototype = Object.create(parent.prototype);
+//                    this.prototype.constructor = this;
+//                };
             }());
 
             (function initStringExtensions() {

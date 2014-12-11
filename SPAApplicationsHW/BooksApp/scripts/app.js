@@ -11,8 +11,8 @@ require.config({
     }
 });
 
-require(["jquery", 'sammy', 'mustache', 'Extender', 'notify'],
-    function ($, sammy, mustache, Extender, notify) {
+require(["jquery", 'sammy', 'mustache', 'notify', 'Extender'],
+    function ($, sammy, mustache, notify, Extender) {
         new Extender();
 
         var note = $('#notes').notify();

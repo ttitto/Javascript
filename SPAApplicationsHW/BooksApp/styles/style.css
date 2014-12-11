@@ -8,7 +8,6 @@ html, body {
 body {
     font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
     font-size: 13px;
-    background-color: #101415;
 }
 
 html, body, div, span, header, footer, main, aside, a, ul, li, nav, section, article, h1, h2, p, img, figure, aside, small, time {
@@ -32,13 +31,6 @@ a {
     text-decoration: none;
     color: inherit;
 }
-
-div#wrapper {
-    width: 900px;
-    margin: 0 auto;
-    background-color: #FFF;
-}
-
 /*#endregion */
 /*#region CLEARFIX */
 
