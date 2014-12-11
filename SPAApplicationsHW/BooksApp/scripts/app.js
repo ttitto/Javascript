@@ -7,7 +7,8 @@ require.config({
         'DataRepo': 'DataRepo',
         'Controller': './controllers/Controller',
         'Extender': 'libs/Extender',
-        'notify': 'libs/notify'
+        'notify': 'libs/notify',
+        'Baas': 'libs/Baas'
     }
 });
 

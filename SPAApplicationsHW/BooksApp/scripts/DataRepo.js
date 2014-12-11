@@ -1,35 +1,25 @@
-define(['AjaxRequester'],
-    function (AjaxRequester) {
+define(['AjaxRequester', 'Baas'],
+    function (AjaxRequester, Baas) {
         var DataRepo = (function () {
-            function DataRepo(baseUrl) {
-                this.baseUrl = baseUrl;
+            function DataRepo() {
+                this.baas = new Baas();
                 this.requester = new AjaxRequester();
-                this.users = new Users();
+                this.users = new Users(this.baas, this.requester);
             }
 
-            var Baas = (function () {
-                function Baas() {
-                    // TODO: constructor
-                }
-
-                Baas.prototype.getHeaders = function getHeaders() {
-                    return {
-                        'X-Parse-Application-Id': 'fE3pqGmdD8hKzNe2d1EKTSiarVHdh36uZZuO9nt8',
-                        'X-Parse-REST-API-Key': 'Z7ZsZRRkYT5Caq20M3aqBlHZMFL6CQ8JrgnSI4Dc'
-                        //'X-Parse-Session-Token': getSessionToken()
-                    };
-                };
-
-                return Baas;
-            }());
-
             var Users = (function () {
-                function Users() {
-                    // TODO: constructor
+                function Users(baas, requester) {
+                    this.baas = baas;
+                    this.serviceUrl = baas.getUrl() + 'User';
+                    this.requester = requester;
                 }
 
-                Users.prototype.register = function register() {
-                    this.requester.post()
+                Users.prototype.register = function register(username, password) {
+                    var credentials = {
+                        username: username,
+                        password: password
+                    };
+                    return this.requester.post(this.serviceUrl, this.baas.getHeaders(), credentials);
                 };
 
                 return Users;
