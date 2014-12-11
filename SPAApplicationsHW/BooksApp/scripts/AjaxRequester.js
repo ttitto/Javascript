@@ -7,20 +7,21 @@ define([],
             function makeRequest(url, requestType, headers, data, dataType, contentType) {
                 var d = $.Deferred(),
                     dataType = dataType || 'json',
-                    contentType = contentType || 'application/json; charset=UTF-8';
+                    contentType = contentType || 'application/json; charset=UTF-8',
+                    data = JSON.stringify(data);
 
                 $.ajax({
                     url: url,
                     type: requestType,
                     headers: headers,
-                    data: JSON.stringify(data),
+                    data: data,
                     contentType: contentType,
                     dataType: dataType,
                     success: function makeRequestSuccess(data) {
-                        $.resolve(data);
+                        d.resolve(data);
                     },
                     error: function makeRequestError(err) {
-                        $.reject(err);
+                        d.reject(err);
                     }
                 });
 

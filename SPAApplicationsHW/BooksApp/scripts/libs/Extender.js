@@ -22,7 +22,7 @@ define([], function () {
                 };
 
                 String.prototype.isNullEmptyUndefined = function (errorMessage) {
-                    if (!this) {
+                    if (!this || this == '' || this == null || typeof this == 'undefined') {
                         throw new ReferenceError(errorMessage);
                     }
 

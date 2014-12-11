@@ -10,7 +10,7 @@ define(['AjaxRequester', 'Baas'],
             var Users = (function () {
                 function Users(baas, requester) {
                     this.baas = baas;
-                    this.serviceUrl = baas.getUrl() + 'User';
+                    this.serviceUrl = baas.getUrl() + 'users';
                     this.requester = requester;
                 }
 

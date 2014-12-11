@@ -6,17 +6,41 @@ require.config({
         'AjaxRequester': 'AjaxRequester',
         'DataRepo': 'DataRepo',
         'Controller': './controllers/Controller',
+        'UserController': './controllers/UserController',
         'Extender': 'libs/Extender',
         'notify': 'libs/notify',
         'Baas': 'libs/Baas'
     }
 });
 
-require(["jquery", 'sammy', 'mustache', 'notify', 'Extender'],
-    function ($, sammy, mustache, notify, Extender) {
+require(["jquery", 'sammy', 'mustache', 'notify', 'Extender', 'Controller', 'UserController', 'DataRepo'],
+    function ($, sammy, mustache, notify, Extender, Controller, UserController, DataRepo) {
         new Extender();
 
-        var note = $('#notes').notify();
-        note.successMessage("successfull notify");
+        var router,
+            note = $('#notes').notify(),
+            dataRepo = new DataRepo(),
+            userController = new UserController(dataRepo),
+            controller = new Controller(dataRepo);
 
+        userController.attachEventHandlers();
+
+        router = sammy(function () {
+            this.get('#/', function () {
+               // controller.loadHome('#wrapper');
+                controller.loadTopNavigation('#top-nav');
+            });
+
+            this.get('#/login', function () {
+                userController.loadLogin('#user-forms');
+            });
+
+            this.get('#/register', function () {
+                userController.loadRegister('#user-forms');
+
+            });
+        });
+
+        router.run('#/');
+        note.successMessage("successfully started");
     });
