@@ -28,8 +28,8 @@ define([],
                 return d.promise();
             }
 
-            AjaxRequester.prototype.get = function get(url, headers, dataType, contentType) {
-                return makeRequest(url, 'GET', headers, null, dataType, contentType);
+            AjaxRequester.prototype.get = function get(url, headers, data, dataType, contentType) {
+                return makeRequest(url, 'GET', headers, data, dataType, contentType);
             };
 
             AjaxRequester.prototype.post = function post(url, headers, data, dataType, contentType) {

@@ -27,7 +27,7 @@ require(["jquery", 'sammy', 'mustache', 'notify', 'Extender', 'Controller', 'Use
 
         router = sammy(function () {
             this.get('#/', function () {
-               // controller.loadHome('#wrapper');
+                controller.loadHome('#main');
                 controller.loadTopNavigation('#top-nav');
             });
 

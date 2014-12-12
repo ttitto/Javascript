@@ -18,6 +18,9 @@ define([ 'DataRepo'],
             };
 
             Controller.prototype.loadTopNavigation = function loadTopNavigation(selector) {
+                if(sessionStorage.getItem(ÚserData)){
+                    // TODO: implement
+                }
                 $(selector).load('./templates/topNavigation.html');
             };
 

@@ -22,6 +22,16 @@ define(['AjaxRequester', 'Baas'],
                     return this.requester.post(this.serviceUrl, this.baas.getHeaders(), credentials);
                 };
 
+                Users.prototype.login = function login(username, password) {
+                    var credentials = {
+                            username: username,
+                            password: password
+                        },
+                        loginUrl = this.baas.getUrl() + 'login?username=' + username + '&password=' + password;
+
+                    return this.requester.get(loginUrl, this.baas.getHeaders(), credentials);
+                };
+
                 return Users;
             }());
 

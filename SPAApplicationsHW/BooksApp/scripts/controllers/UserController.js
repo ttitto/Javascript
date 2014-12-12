@@ -14,9 +14,14 @@ define([ 'Controller', 'notify'],
                     $(selector).load('./templates/registerForm.html');
                 };
 
+                UserController.prototype.loadLogin = function loadLogin(selector) {
+                    $(selector).load('./templates/loginForm.html');
+                };
+
                 UserController.prototype.attachEventHandlers = function () {
                     Controller.prototype.attachEventHandlers.call(this);
                     attachRegisterHandler.call(this, '#user-forms');
+                    attachLoginHandler.call(this, '#user-forms');
                 };
 
                 var attachRegisterHandler = function (selector) {
@@ -30,12 +35,14 @@ define([ 'Controller', 'notify'],
                             username.isNullEmptyUndefined('Username can not be undefined, empty or null!');
                         } catch (err) {
                             note.errorMessage('', 'You should fill a username!');
+                            console.log(err.responseText);
                         }
 
                         try {
                             password.isNullEmptyUndefined('Password can not be undefined, empty or null!');
                         } catch (err) {
                             note.errorMessage('', 'You should fill a password!');
+                            console.log(err.responseText);
                         }
 
                         if (password != repeat) {
@@ -44,15 +51,55 @@ define([ 'Controller', 'notify'],
 
                         _this.getDataRepo().users.register(username, password)
                             .then(
-                            function registerSuccess(registerData) {
-                                note.successMessage('Registration successful!');
+                            function registerSuccess(registrationData) {
+                                note.successMessage('Registration successful. Please log in!');
+                                window.location = '#/login';
                             },
                             function registerError(err) {
-                                note.errorMessage('', 'A problem occured while trying to register.');
+                                note.errorMessage('', 'A problem occurred while trying to register.');
                                 console.log(err.responseText);
                             }
                         );
+                    });
+                };
 
+                var attachLoginHandler = function (selector) {
+                    var _this = this;
+                    $(selector).on('click', '#login-btn', function () {
+                        var username = $('#login-username-input').val(),
+                            password = $('#login-password-input').val();
+
+                        try {
+                            username.isNullEmptyUndefined('Username can not be undefined, empty or null!');
+                        } catch (err) {
+                            note.errorMessage('', 'You should fill a username!');
+                            console.log(err.responseText);
+                        }
+
+                        try {
+                            password.isNullEmptyUndefined('Password can not be undefined, empty or null!');
+                        } catch (err) {
+                            note.errorMessage('', 'You should fill a password!');
+                            console.log(err.responseText);
+                        }
+
+                        _this.getDataRepo().users.login(username, password)
+                            .then(
+                            function loginSuccess(loginData) {
+                                note.successMessage('Login successful.');
+                                sessionStorage.setItem('UserData',
+                                    JSON.stringify({
+                                        username: loginData.username,
+                                        userId: loginData.objectId,
+                                        sessionToken: loginData.sessionToken
+                                    }));
+                                window.location = '#/';
+                            },
+                            function loginError(loginErr) {
+                                note.errorMessage('', 'A problem occurred while trying to login.');
+                                console.log(loginErr.responseText);
+                            }
+                        );
                     });
                 };
 
