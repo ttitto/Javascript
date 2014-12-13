@@ -1,12 +1,24 @@
 <ul id="books-list">
-    {{#books}}
+    {{#results}}
     <li class="book">
+
+        <div id="book-btns">
+            <ul id="book-btns-list">
+                <li>
+                    <button class="book-btn" id="edit-btn" data-id="{{objectId}}">Edit</button>
+                </li>
+                <li>
+                    <button class="book-btn" id="del-btn" data-id="{{objectId}}">Delete</button>
+                </li>
+            </ul>
+        </div>
+
         <div class="book-title">{{title}}</div>
         <div class="book-author">{{author}}</div>
         <div class="book-isbn">{{isbn}}</div>
         <div class="book-tags">
-            <small>{{#tags}}, {{/tags}}</small>
+            <small>{{#tags}}{{.}} {{/tags}}</small>
         </div>
     </li>
-    {{/books}}
+    {{/results}}
 </ul>

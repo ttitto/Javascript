@@ -22,11 +22,12 @@ define([ 'Controller', 'notify'],
                     Controller.prototype.attachEventHandlers.call(this);
                     attachRegisterHandler.call(this, '#user-forms');
                     attachLoginHandler.call(this, '#user-forms');
+                    attachLogoutHandler.call(this, '#top-nav');
                 };
 
                 var attachRegisterHandler = function (selector) {
                     var _this = this;
-                    $(selector).on('click', '#reg-btn', function () {
+                    $(selector).on('click', '#reg-btn', function (ev) {
                         var username = $('#reg-username-input').val(),
                             password = $('#reg-password-input').val(),
                             repeat = $('#reg-repeat-input').val();
@@ -51,7 +52,7 @@ define([ 'Controller', 'notify'],
 
                         _this.getDataRepo().users.register(username, password)
                             .then(
-                            function registerSuccess(registrationData) {
+                            function registerSuccess() {
                                 note.successMessage('Registration successful. Please log in!');
                                 window.location = '#/login';
                             },
@@ -65,7 +66,7 @@ define([ 'Controller', 'notify'],
 
                 var attachLoginHandler = function (selector) {
                     var _this = this;
-                    $(selector).on('click', '#login-btn', function () {
+                    $(selector).on('click', '#login-btn', function (ev) {
                         var username = $('#login-username-input').val(),
                             password = $('#login-password-input').val();
 
@@ -93,13 +94,22 @@ define([ 'Controller', 'notify'],
                                         userId: loginData.objectId,
                                         sessionToken: loginData.sessionToken
                                     }));
-                                window.location = '#/';
+                                $(ev.target).parent().remove();
+                                window.location = '#/books';
                             },
                             function loginError(loginErr) {
                                 note.errorMessage('', 'A problem occurred while trying to login.');
                                 console.log(loginErr.responseText);
                             }
                         );
+                    });
+                };
+
+                var attachLogoutHandler = function (selector) {
+                    $(selector).on('click', '#logout-btn', function () {
+                        sessionStorage.removeItem('UserData');
+                        $('#my-books').children().remove();
+                        window.location = '#/';
                     });
                 };
 

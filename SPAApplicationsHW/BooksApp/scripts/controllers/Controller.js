@@ -1,6 +1,7 @@
-define([ 'DataRepo'],
-    function (DataRepo) {
+define([ 'DataRepo', 'Mustache'],
+    function (DataRepo, Mustache) {
         var Controller = (function () {
+
             function Controller(dataRepo) {
                 this.setDataRepo(dataRepo);
             }
@@ -13,19 +14,17 @@ define([ 'DataRepo'],
                 this._dataRepo = dataRepo;
             };
 
-            Controller.prototype.loadHome = function loadHome(selector){
+            Controller.prototype.loadHome = function loadHome(selector) {
                 $(selector).load('./templates/home.html')
             };
 
             Controller.prototype.loadTopNavigation = function loadTopNavigation(selector) {
-                if(sessionStorage.getItem(ÚserData)){
-                    // TODO: implement
-                }
-                $(selector).load('./templates/topNavigation.html');
-            };
+                var userData = JSON.parse(sessionStorage.getItem('UserData'));
 
-            Controller.prototype.loadUserTopNavigation = function loadUserTopNavigation(selector) {
-                $(selector).load('./templates/userTopNavigation.html');
+                $.get('./templates/TopNavigation.html', function (template) {
+                    var output = Mustache.render(template, userData);
+                    $(selector).html(output);
+                });
             };
 
             Controller.prototype.attachEventHandlers = function attachEventHandlers() {

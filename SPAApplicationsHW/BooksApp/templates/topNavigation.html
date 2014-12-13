@@ -1,6 +1,11 @@
 <ul id="top-nav-list">
     <li><a href="#/">Home</a></li>
+    {{#userId}}
+    <li><a href="#/" class="left" id="logout-btn">Logout</a></li>
+    <li><a href="#/newBook" class="left" id="add-book-btn">Add book</a></li>
+    {{/userId}}
+    {{^userId}}
     <li><a href="#/register" class="left">Register</a></li>
     <li><a href="#/login" class="left">Login</a></li>
-    <li><a href="#/logout" class="left">Logout</a></li>
+    {{/userId}}
 </ul>

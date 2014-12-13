@@ -16,7 +16,20 @@ define([], function () {
             return 'https://api.parse.com/1/';
         };
 
+        Baas.prototype.getAcl = function getAcl(userId) {
+            return '{ "*":{"read":true}, "' + userId + '":{"write":true,"read":true}}';
+        };
+
+        Baas.prototype.getWhereString = function getWhereString(colName, className, classId) {
+            return '?where={"' + colName + '":{"__type":"Pointer","className":"' + className + '","objectId":"' + classId + '"}}';
+        };
+
+        Baas.prototype.getPointerString = function (className, id) {
+            return '{"__type":"Pointer","className":"' + className + '","objectId":"' + id + '"}';
+        };
+
         return Baas;
     }());
     return Baas;
-});
+})
+;
