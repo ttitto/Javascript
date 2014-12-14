@@ -1,0 +1,24 @@
+<div class="products">
+    <ul>{{#results}}
+        <li class="product" data-id="{{objectId}}" user="{{userId.objectId}}">
+            <div class="product-info">
+
+                <p class="item-name">{{name}}</p>
+
+                <p class="category"><span class="pre">Category:</span>{{category}}</p>
+
+                <p class="price"><span class="pre">Price:</span> ${{price}}</p>
+
+            </div>
+            <footer class="product-footer">
+                <a href="#/editProduct">
+                    <button class="edit-button" data-Id="{{objectId}}">Edit</button>
+                </a>
+                <a href="#/deleteProduct">
+                    <button class="delete-button" data-Id="{{objectId}}">Delete</button>
+                </a>
+            </footer>
+        </li>
+        {{/results}}
+    </ul>
+</div>
