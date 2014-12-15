@@ -1,0 +1,15 @@
+(function ($){
+	$.fn.myPlugin = function(options) {
+		var settings = {};
+		$.extend(settings, this.myPlugin.defaults, options);
+		return this;
+	}
+	
+	$.fn.muPlugin.defaults = {
+		option1: 'default1',
+		option2: 'default2,
+		option3: 'default3
+	};
+})(jQuery);
+
+$.fn.myPlugin.defaults.option3 = 'new default';
