@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tiger</title>
+
+    <script src="libs/angular.js" type="text/javascript"></script>
+    <script src="tigerApp.js" type="text/javascript"></script>
+</head>
+<body>
+<div data-ng-app="tigerApp" data-ng-controller="TigerController" data-ng-style="tigerStyle">
+    <div data-ng-style="textWrapperStyle">
+        <h3 data-ng-style="keyStyle">TIGER </h3>
+
+        <div><span data-ng-style="keyStyle">Name:</span><span data-ng-style="propStyle">{{tiger.Name}}</span></div>
+        <div><span data-ng-style="keyStyle">Born:</span><span data-ng-style="propStyle">{{tiger.Born}}</span></div>
+        <div><span data-ng-style="keyStyle">Birth date:</span><span data-ng-style="propStyle">{{tiger.BirthDate}}</span></div>
+        <div><span data-ng-style="keyStyle">Live:</span><span data-ng-style="propStyle">{{tiger.Live}}</span></div>
+    </div>
+    <img src="{{url}}" data-ng-style="imgStyle" alt="tiger"/>
+</div>
+</body>
+</html>
