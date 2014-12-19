@@ -1,0 +1,14 @@
+<form class="col-md-12" id="login-form">
+    <div class="form-group">
+        <label for="username">username: </label>
+        <input type="text" id="username" data-ng-model="username" class="form-control input-sm" placeholder="Username">
+    </div>
+    <div class="form-group">
+        <label for="password">password: </label>
+        <input type="password" id="password" data-ng-model="password" class="form-control input-sm" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <button data-ng-click="login()" class="btn btn-primary btn-sm btn-block">Sign In</button>
+        <span class="pull-right"><a href="#/register">New Registration</a></span>
+    </div>
+</form>
