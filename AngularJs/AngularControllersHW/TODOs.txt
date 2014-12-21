@@ -1,9 +1,11 @@
-- create parse.com tables Category, Video, Comment
-- create common menu template - Home, Login, Register
-- create user menu template - Home, Add video,  Logout
-- create register form template
-- create login form template
-- implement user registration and login logic
+done - create parse.com tables Category, Video, Comment
+done - create common menu template - Home, Login, Register
+done - create user menu template - Home, Add video,  Logout
+done - create register form template
+done - create login form template
+- extract a service with the logged user and session
+- extract a service with the user and login and registration on the server
+- implement user registration and login logic in the user controller
 - implement user login and registration validations
 - implement adding new video functionality
 - implement video adding form validations
