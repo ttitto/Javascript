@@ -1,3 +1,6 @@
-<li><a href="#/">Home</a></li>
-<li><a href="#/register">Register</a></li>
-<li><a href="#/login">Login</a></li>
+<ul class="nav navbar-nav nav-links">
+    <li data-ng-if="userData.isLoggedUser()"><a href="#/add-video">Add video</a></li>
+    <li data-ng-if="userData.isLoggedUser()"><a href="#/" data-ng-click="logout()">Logout</a></li>
+    <li data-ng-if="!userData.isLoggedUser()"><a href="#/register">Register</a></li>
+    <li data-ng-if="!userData.isLoggedUser()"><a href="#/login">Login</a></li>
+</ul>

@@ -8,29 +8,16 @@ var videoSystem = angular.module('videoSystem', ['ngRoute'])
             $.extend($httpProvider.defaults.headers.common, parseComHeaders);
 
             $routeProvider
+                .when('/', {
+                })
                 .when('/login', {
-                    action: 'angular',
                     templateUrl: './templates/login-form.html'
                 })
                 .when('/register', {
-                    action: 'angular',
                     templateUrl: './templates/register-form.html'
                 })
-                .when('/', {
-                    controller: 'MenuController',
-                    templateUrl: './templates/user-menu-links.html',
-                    resolve: {
-                        menuLinks: function (userData) {
-                            if (userData.isLoggedUser) {
-                                return './templates/user-menu-links.html';
-                            } else {
-                                return './templates/menu-links.html';
-                            }
-                        }
-                    }
-                },{
-                    controller: 'UserController',
-                    templateUrl: './templates/menu-links.html'
+                .when('/add-video', {
+                    templateUrl: './templates/add-video.html'
                 })
                 .otherwise({
                     redirectTo: '/'

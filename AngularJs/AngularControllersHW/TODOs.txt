@@ -3,11 +3,11 @@ done - create common menu template - Home, Login, Register
 done - create user menu template - Home, Add video,  Logout
 done - create register form template
 done - create login form template
-- extract a service with the logged user and session
-- extract a service with the user and login and registration on the server
-- implement user registration and login logic in the user controller
+done - extract a service with the logged user and session
+done - extract a service with the user and login and registration on the server
+done - implement user registration and login logic in the user controller
 - implement user login and registration validations
-- implement adding new video functionality
+started - implement adding new video functionality
 - implement video adding form validations
 - create all videos view. the required fields for a view should be shown. The other information should appear only after a "show optional information" button has been clicked. The view should show the voting raiting, the last few comments with option to expand all comments. When the user is registered an add comment button should be active. When the video has been published by the logged user, butons for edit and delete should be active.
 - add select element with filter options and implement filter logic

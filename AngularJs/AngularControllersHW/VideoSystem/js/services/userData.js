@@ -4,19 +4,10 @@ videoSystem.factory('userData', function ($http, $q, parseCom) {
     return{
         isLoggedUser: function isLoggedUser() {
             var sessionUser = sessionStorage.getItem('UserData');
-            if (sessionUser) {
-                return true;
-            } else {
-                return false;
-            }
+            return !!sessionUser;
         },
         getLoggedUser: function getLoggedUser() {
-            var sessionUser = sessionStorage.getItem('UserData');
-            if (sessionUser) {
-                return sessionUser;
-            } else {
-                return false;
-            }
+            return JSON.parse(sessionStorage.getItem('UserData'));
         },
         setLoggedUser: function setLoggedUser(user) {
             var sessionUser = {
@@ -43,7 +34,6 @@ videoSystem.factory('userData', function ($http, $q, parseCom) {
             return d.promise;
         },
         login: function login(user) {
-            // TODO: implement parse.com login user
             var d = $q.defer();
             $http({
                 method: 'GET',
@@ -57,6 +47,9 @@ videoSystem.factory('userData', function ($http, $q, parseCom) {
                 });
 
             return d.promise;
+        },
+        logout: function logout() {
+            sessionStorage.removeItem('UserData');
         }
     }
 })

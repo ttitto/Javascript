@@ -1,7 +1,8 @@
 videoSystem.controller('UserController', function ($scope, $window, userData) {
-    $scope.isLoggedUser = userData.isLoggedUser();
     $scope.register = registerUser;
     $scope.login = loginUser;
+    $scope.userData = userData;
+    $scope.logout = logout;
 
     function registerUser() {
         var user = {
@@ -38,5 +39,9 @@ videoSystem.controller('UserController', function ($scope, $window, userData) {
                 console.log(err);
             }
         )
+    }
+
+    function logout() {
+        userData.logout();
     }
 });

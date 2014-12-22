@@ -1,0 +1,35 @@
+<form data-ng-controller="AddVideoController" class="col-md-6 form-horizontal" name="addVideoForm">
+    <fieldset>
+        <legend>Video</legend>
+        <div class="form-group">
+            <label for="video-title" class="control-label col-md-1 pull-left">Title: </label>
+            <input id="video-title" data-ng-model="video.title" type="text" class="form-control input-sm"/>
+        </div>
+        <div class="form-group">
+            <label for="video-length" class="control-label col-md-1 pull-left">Length: </label>
+            <input id="video-length" data-ng-model="video.length" type="number" class="form-control input-sm"/>
+        </div>
+        <div class="form-group">
+            <label for="video-subscribers-count" class="control-label pull-left">Subscribers Count: </label>
+            <input id="video-subscribers-count" data-ng-model="video.subscribersCount" type="number"
+                   class="form-control input-sm"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label pull-left" for="has-subtitles">Has subtitles: </label>
+            <input type="checkbox" data-ng-model="video.hasSubtitles" id="has-subtitles"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label pull-left" for="video-picture">Picture URL: </label>
+            <input type="url" data-ng-model="video.pictureUrl" id="video-picture"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label pull-left" for="video-date">Date: </label>
+            <input type="date" data-ng-model="video.date" id="video-date"/>
+        </div>
+        <div class="form-group">
+            <button data-ng-click="addVideo(video, addVideoForm)" class="btn btn-primary btn-sm btn-block">Add video
+            </button>
+        </div>
+
+    </fieldset>
+</form>

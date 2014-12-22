@@ -11,10 +11,14 @@
     <link rel="stylesheet" href="css/styles.css" type="text/css"/>
     <link rel="stylesheet" href="css/videoApp.css" type="text/css"/>
 </head>
-<body data-ng-app="videoSystem">
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<body data-ng-app="videoSystem" data-ng-cloak>
+<nav data-ng-controller="UserController" class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <a class="navbar-brand" rel="home" href="#/">Video System</a>
+
+        <div data-ng-if="userData.isLoggedUser()" class="navbar-link well-sm" id="greeting">Welcome
+            {{userData.getLoggedUser().username}}
+        </div>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -24,12 +28,7 @@
     </div>
 
     <div class="collapse navbar-collapse">
-        <div id="nav-links-container" data-ng-controller="MenuController">
-            <ul class="nav navbar-nav nav-links" data-ng-view="menuContent" ></ul>
-        </div>
-        <div id="user-forms" class="col-sm-3 col-md-3" data-ng-view data-ng-controller="UserController">
-
-        </div>
+        <div id="nav-links-container" data-ng-include="'templates/menu-links.html'"></div>
 
         <div class="col-sm-3 col-md-3 pull-right">
             <form class="navbar-form" role="search">
@@ -46,6 +45,8 @@
     </div>
 </nav>
 
+<main data-ng-view ></main>
+
 <script src="lib/jquery.min.js" type="text/javascript"></script>
 <script src="lib/bootstrap.js" type="text/javascript"></script>
 <script src="lib/angular/angular.js" type="text/javascript"></script>
@@ -54,7 +55,7 @@
 <script src="js/services/parseCom.js" type="text/javascript"></script>
 <script src="js/services/userData.js" type="text/javascript"></script>
 <script src="js/controllers/UserController.js" type="text/javascript"></script>
-<script src="js/controllers/MenuController.js" type="text/javascript"></script>
+<script src="js/controllers/AddVideoController.js" type="text/javascript"></script>
 
 </body>
 </html>
