@@ -17,3 +17,4 @@ started - implement adding new video functionality
 
 
 authentication help: https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
+resolve help: http://odetocode.com/blogs/scott/archive/2014/05/20/using-resolve-in-angularjs-routes.aspx
